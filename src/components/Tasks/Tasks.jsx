@@ -12,6 +12,7 @@ export const Tasks = (props) => {
           // completed={todo.completed}
           todo={todo}
           changeStatus={props.changeStatus}
+          deleteTodo={props.deleteTodo}
         />
       ))}
     </div>

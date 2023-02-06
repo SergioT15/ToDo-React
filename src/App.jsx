@@ -34,15 +34,23 @@ const App = () => {
     setTodos(updatedTodos);
   };
 
+  //Delete task
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className={styles.container}>
       <Title />
       <Form addTodo={addTodo} />
       <div>
         {todos.length !== 0 ? (
-          <Tasks 
-          todos={todos} 
-          changeStatus={changeStatus} />
+          <Tasks
+            todos={todos}
+            changeStatus={changeStatus}
+            deleteTodo={deleteTodo}
+          />
         ) : (
           <h3> Tasks not found</h3>
         )}

@@ -11,7 +11,7 @@ export const Task = (props) => {
       />
       <p>{props.todo.text}</p>
       {/* <p>{props.id}</p> */}
-      <button>x</button>
+      <button onClick={() => props.deleteTodo(props.todo.id)}>x</button>
     </div>
   );
 };
