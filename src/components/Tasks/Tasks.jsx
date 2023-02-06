@@ -5,7 +5,13 @@ export const Tasks = (props) => {
   return (
     <div className="tasks">
       {props.todos.map((todo) => (
-        <Task key={todo.id} id={todo.id} text={todo.text} completed={todo.completed} />
+       <Task
+          key={todo.id}
+          // id={todo.id}
+          // text={todo.text}
+          // completed={todo.completed}
+          todo={todo}
+        />
       ))}
     </div>
   );

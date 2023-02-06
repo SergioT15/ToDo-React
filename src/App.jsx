@@ -8,7 +8,7 @@ import styles from "./App.module.css";
 const App = () => {
   const [todos, setTodos] = useState([]);
 
-  // add new task
+  // Add new task
   const addTodo = (todoText) => {
     if (todoText.trim() !== "") {
       const newTask = {
@@ -27,7 +27,15 @@ const App = () => {
     <div className={styles.container}>
       <Title />
       <Form addTodo={addTodo} />
-      <Tasks todos={todos} />
+      <div>
+        {todos.length !== 0 ? (
+          <Tasks
+            todos={todos}
+          />
+        ) : (
+          <h3> Tasks not found</h3>
+        )}
+      </div>
       <CountTasks />
       <Filter />
     </div>

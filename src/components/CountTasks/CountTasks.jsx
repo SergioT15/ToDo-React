@@ -1,8 +1,8 @@
-import React from 'react'
-import "./CountTasks"
+import React from "react";
+import "./CountTasks";
 
 export const CountTasks = () => {
   return (
-    <div>CountTasks</div>
+    <div></div>
   )
 }
