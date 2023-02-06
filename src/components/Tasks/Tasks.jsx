@@ -1,13 +1,12 @@
-import React from 'react'
-import { Task } from './Task'
-import "./Tasks.css"
+import { Task } from "./Task";
+import "./Tasks.css";
 
-
-export const Tasks = () => {
+export const Tasks = (props) => {
   return (
     <div className="tasks">
-    <Task/>
+      {props.todos.map((todo) => (
+        <Task key={todo.id} id={todo.id} text={todo.text} completed={todo.completed} />
+      ))}
     </div>
-  )
-}
- 
+  );
+};

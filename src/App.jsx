@@ -27,7 +27,7 @@ const App = () => {
     <div className={styles.container}>
       <Title />
       <Form addTodo={addTodo} />
-      <Tasks />
+      <Tasks todos={todos} />
       <CountTasks />
       <Filter />
     </div>
