@@ -14,7 +14,7 @@ const App = () => {
       const newTask = {
         text: todoText,
         id: uuidv4(),
-        complited: false,
+        completed: false,
       };
 
       setTodos([newTask, ...todos]);
@@ -23,13 +23,26 @@ const App = () => {
 
   console.log(todos);
 
+  // Change completed and uncompleted
+  const changeStatus = (id) => {
+    const updatedTodos = todos.map((todo) => {
+      if (id === todo.id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className={styles.container}>
       <Title />
       <Form addTodo={addTodo} />
       <div>
         {todos.length !== 0 ? (
-          <Tasks todos={todos} />
+          <Tasks 
+          todos={todos} 
+          changeStatus={changeStatus} />
         ) : (
           <h3> Tasks not found</h3>
         )}
