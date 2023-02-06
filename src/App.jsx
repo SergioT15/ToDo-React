@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { Form, Title, Tasks, CountTasks, Filter } from "./components";
+import { Form, Title, Tasks, TasksCount, Filter } from "./components";
 
 import styles from "./App.module.css";
 
@@ -29,14 +29,12 @@ const App = () => {
       <Form addTodo={addTodo} />
       <div>
         {todos.length !== 0 ? (
-          <Tasks
-            todos={todos}
-          />
+          <Tasks todos={todos} />
         ) : (
           <h3> Tasks not found</h3>
         )}
       </div>
-      <CountTasks />
+      <TasksCount todos={todos} />
       <Filter />
     </div>
   );
