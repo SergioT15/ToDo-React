@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { Form, Title, Tasks, TasksCount, Filter, CheckAll } from "./components";
+import { Form, Title, Tasks, Filter } from "./components";
 
 import styles from "./App.module.css";
 
@@ -40,6 +40,7 @@ const App = () => {
     setTodos(updatedTodos);
   };
 
+  //Change all statuses completed and incomplete
   const changeAllStatuses = () => {
     const updatedTodos = todos.map((todo) => {
       if (todos) {
@@ -50,24 +51,27 @@ const App = () => {
     setTodos(updatedTodos);
   };
 
+  //Delete all completed tasks
+  const deleteAllCompleted = () => {
+    const updatedTodos = todos.filter((todo) => todo.completed !== true);
+
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className={styles.container}>
       <Title />
       <Form addTodo={addTodo} />
-      <div>
-        {todos.length !== 0 ? (
-          <Tasks
-            todos={todos}
-            changeStatus={changeStatus}
-            deleteTodo={deleteTodo}
-          />
-        ) : (
-          <h3> Tasks not found</h3>
-        )}
-      </div>
-      <TasksCount todos={todos} />
-      <CheckAll todos={todos} changeAllStatuses={changeAllStatuses} />
-      <Filter />
+      <Tasks
+        todos={todos}
+        changeStatus={changeStatus}
+        deleteTodo={deleteTodo}
+      />
+      <Filter
+        todos={todos}
+        changeAllStatuses={changeAllStatuses}
+        deleteAllCompleted={deleteAllCompleted}
+      />
     </div>
   );
 };
