@@ -20,13 +20,13 @@ export const Form = (props) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <input
-        className={styles.form}
+        className={styles.input}
         type="text"
         placeholder="Add new todo"
         value={text}
         onChange={handleChange}
       />
-      <button className="button">Add</button>
+      <button className={styles.buttonForm}>Add</button>
     </form>
   );
 };
