@@ -1,9 +1,10 @@
 import React from "react";
-import "./Task.css";
+
+import styles from "./Task.module.css"
 
 export const Task = (props) => {
   return (
-    <div className="task">
+    <div className={styles.task}>
       <input
         checked={props.todo.completed}
         type="checkbox"

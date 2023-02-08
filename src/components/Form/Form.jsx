@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import "./Form.css";
+import styles from "./Form.module.css";
 
 export const Form = (props) => {
   const [text, setText] = useState("");
@@ -15,13 +15,12 @@ export const Form = (props) => {
     setText(e.target.value);
   };
 
-
   console.log(text);
 
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <input
+        className={styles.form}
         type="text"
         placeholder="Add new todo"
         value={text}

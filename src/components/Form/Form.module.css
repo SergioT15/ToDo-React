@@ -1,0 +1,8 @@
+.button {
+  width: 40px;
+}
+
+.form {
+  display: flex;
+  flex-grow: 1;
+}

@@ -1,24 +1,42 @@
 import { useState } from "react";
+
 import { v4 as uuidv4 } from "uuid";
 
-import { Form, Title, Tasks, Filter } from "./components";
+import { Form } from "./components/Form";
+import { Title } from "./components/Title";
+import { Tasks } from "./components/Tasks";
+import { Filter } from "./components/Filter";
 
 import styles from "./App.module.css";
 
+const filterMap = {
+  All: () => true,
+  Active: (todo) => !todo.completed,
+  Completed: (todo) => todo.completed,
+};
+
+const filterNames = Object.keys(filterMap);
+
+console.log(filterNames);
+
+console.log(filterMap);
+
 const App = () => {
   const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState("All");
 
   // Add new task
   const addTodo = (todoText) => {
-    if (todoText.trim() !== "") {
-      const newTask = {
-        text: todoText,
-        id: uuidv4(),
-        completed: false,
-      };
-
-      setTodos([newTask, ...todos]);
+    if (!todoText.trim()) {
+      return;
     }
+    const newTask = {
+      text: todoText,
+      id: uuidv4(),
+      completed: false,
+    };
+
+    setTodos([newTask, ...todos]);
   };
 
   console.log(todos);
@@ -26,10 +44,10 @@ const App = () => {
   // Change completed and uncompleted
   const changeStatus = (id) => {
     const updatedTodos = todos.map((todo) => {
-      if (id === todo.id) {
-        return { ...todo, completed: !todo.completed };
+      if (id !== todo.id) {
+        return todo;
       }
-      return todo;
+      return { ...todo, completed: !todo.completed };
     });
     setTodos(updatedTodos);
   };
@@ -43,10 +61,10 @@ const App = () => {
   //Change all statuses completed and incomplete
   const changeAllStatuses = () => {
     const updatedTodos = todos.map((todo) => {
-      if (todos) {
-        return { ...todo, completed: !todo.completed };
+      if (!todos) {
+        return todo;
       }
-      return todo;
+      return { ...todo, completed: !todo.completed };
     });
     setTodos(updatedTodos);
   };
@@ -58,6 +76,8 @@ const App = () => {
     setTodos(updatedTodos);
   };
 
+  console.log();
+
   return (
     <div className={styles.container}>
       <Title />
@@ -66,8 +86,13 @@ const App = () => {
         todos={todos}
         changeStatus={changeStatus}
         deleteTodo={deleteTodo}
+        filterMap={filterMap}
+        filter={filter}
       />
       <Filter
+        filter={filter}
+        filterNames={filterNames}
+        setFilter={setFilter}
         todos={todos}
         changeAllStatuses={changeAllStatuses}
         deleteAllCompleted={deleteAllCompleted}

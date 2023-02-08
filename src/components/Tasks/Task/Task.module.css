@@ -1,0 +1,13 @@
+.task {
+  display: flex;
+}
+
+.task p {
+  flex-grow: 1;
+  padding: 5px 0;
+}
+
+input:checked + p {
+  text-decoration: line-through;
+  color: rgb(235, 130, 148);
+}
