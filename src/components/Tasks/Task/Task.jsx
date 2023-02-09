@@ -11,9 +11,15 @@ export const Task = (props) => {
     setNewText(e.target.value);
   }
 
-  const notNewText = () => {
+  const notNewText = (e) => {
     setNewText("");
     props.setEditing("");
+  };
+
+  const GoOutOnEsc = (e) => {
+    if (e.code === "Escape") {
+      notNewText();
+    }
   };
 
   return (
@@ -44,6 +50,7 @@ export const Task = (props) => {
               value={newText}
               onChange={handleChange}
               type="text"
+              onKeyUp={GoOutOnEsc}           
             />
 
             <button
