@@ -17,13 +17,21 @@ const filterMap = {
 
 const filterNames = Object.keys(filterMap);
 
-console.log(filterNames);
-
-console.log(filterMap);
-
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("All");
+  const [isEditing, setEditing] = useState("");
+
+  // Editing on doubleClick
+  function editTodo(id, newName) {
+    const editedTodo = todos.map((todo) => {
+      if (id === todo.id && newName.trim() !== "") {
+        return { ...todo, text: newName };
+      }
+      return todo;
+    });
+    setTodos(editedTodo);
+  }
 
   // Add new task
   const addTodo = (todoText) => {
@@ -89,6 +97,9 @@ const App = () => {
           deleteTodo={deleteTodo}
           filterMap={filterMap}
           filter={filter}
+          isEditing={isEditing}
+          setEditing={setEditing}
+          editTodo={editTodo}
         />
         <Filter
           filter={filter}

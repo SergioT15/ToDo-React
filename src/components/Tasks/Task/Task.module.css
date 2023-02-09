@@ -38,3 +38,24 @@ input:checked + p {
   border-radius: 9px;
   padding: 0 15px;
 }
+
+.taskInputEdit {
+  height: 30px;
+  flex-grow: 1;
+  width: 240px;
+  border-radius: 10px;
+  padding: 0 10px;
+  border: none;
+  background: #6c8c97;
+}
+
+.taskButtonEscEdit {
+  width: 55px;
+  height: 28px;
+  margin: auto 0;
+  margin-left: 3px;
+}
+
+.taskBlockEdit {
+  display: flex;
+}
