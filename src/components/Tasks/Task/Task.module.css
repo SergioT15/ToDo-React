@@ -24,12 +24,9 @@ input:checked + p {
   color: rgb(235, 130, 148);
 }
 
-.taskCheckbox{
+.taskCheckbox {
   height: 20px;
   width: 20px;
-
-
-  border: 15px;
 }
 
 .taskDeleteButton {

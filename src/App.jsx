@@ -81,35 +81,23 @@ const App = () => {
   return (
     <div className={styles.app}>
       <div className={styles.conteiner}>
-
-
-      {/* @Artem Reva
-
-Today I’ve
-  Added function that delete all completed tasks.Fixed structure app
-  Added function that changes the status of completed and incomplete for all tasks
-Tomorrow I’ll
-  Continue doing todo */}
-
-
-
-      <Title />
-      <Form addTodo={addTodo} />
-      <Tasks
-        todos={todos}
-        changeStatus={changeStatus}
-        deleteTodo={deleteTodo}
-        filterMap={filterMap}
-        filter={filter}
-      />
-      <Filter
-        filter={filter}
-        filterNames={filterNames}
-        setFilter={setFilter}
-        todos={todos}
-        changeAllStatuses={changeAllStatuses}
-        deleteAllCompleted={deleteAllCompleted}
-      />
+        <Title />
+        <Form addTodo={addTodo} />
+        <Tasks
+          todos={todos}
+          changeStatus={changeStatus}
+          deleteTodo={deleteTodo}
+          filterMap={filterMap}
+          filter={filter}
+        />
+        <Filter
+          filter={filter}
+          filterNames={filterNames}
+          setFilter={setFilter}
+          todos={todos}
+          changeAllStatuses={changeAllStatuses}
+          deleteAllCompleted={deleteAllCompleted}
+        />
       </div>
     </div>
   );
