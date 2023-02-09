@@ -22,6 +22,10 @@ export const Task = (props) => {
     }
   };
 
+  const onBlur = () => {
+    props.setEditing(false);
+  };
+
   return (
     <div className={styles.task}>
       <>
@@ -52,6 +56,7 @@ export const Task = (props) => {
               type="text"
               onKeyUp={GoOutOnEsc}
               autoFocus
+              onBlur={onBlur}
             />
 
             <button
