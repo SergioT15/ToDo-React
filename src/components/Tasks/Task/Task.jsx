@@ -50,7 +50,8 @@ export const Task = (props) => {
               value={newText}
               onChange={handleChange}
               type="text"
-              onKeyUp={GoOutOnEsc}           
+              onKeyUp={GoOutOnEsc}
+              autoFocus
             />
 
             <button
