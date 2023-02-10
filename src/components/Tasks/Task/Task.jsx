@@ -30,6 +30,13 @@ export const Task = (props) => {
   //   setEditing("");
   // };
 
+  const handleChangeOnClick = (e) => {
+    e.preventDefault();
+    props.editTodo(props.todo.id, newText);
+    setNewText(newText);
+    setEditing(false);
+  };
+
   return (
     <div className={styles.task}>
       <>
@@ -44,12 +51,7 @@ export const Task = (props) => {
         {isEditing === props.todo.id ? (
           <form
             className={styles.taskBlockEdit}
-            onSubmit={(e) => {
-              e.preventDefault();
-              props.editTodo(props.todo.id, newText);
-              setNewText(newText);
-              setEditing(false);
-            }}
+            onSubmit={handleChangeOnClick}
           >
             <input
               className={styles.taskInputEdit}

@@ -6,11 +6,13 @@ export const Filter = (props) => {
   const countCompleted = props.todos.filter((todo) => todo.completed !== true);
 
   return (
-    <div className={styles.filter}>
-      {props.todos.length !== 0 && <p className={styles.filterCounter}>{countCompleted.length} items left</p>}
-
-        {props.todos.length !== 0 &&
-          props.filterNames.map((name, index) => {
+    <div>
+      {props.todos.length !== 0 && (
+        <div className={styles.filter}>
+          <p className={styles.filterCounter}>
+            {countCompleted.length} items left
+          </p>
+          {props.filterNames.map((name, index) => {
             return (
               <FilterButton
                 key={index}
@@ -20,13 +22,10 @@ export const Filter = (props) => {
               />
             );
           })}
-
-        {props.todos.length !== 0 && (
           <button onClick={() => props.changeAllStatuses()}>Check</button>
-        )}
-        {props.todos.length !== 0 && (
-          <button onClick={props.deleteAllCompleted}>Clear</button>
-        )}
+          <button onClick={props.deleteAllCompleted}>Clear</button>{" "}
+        </div>
+      )}
     </div>
   );
 };
