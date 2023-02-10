@@ -6,30 +6,34 @@ import styles from "./Task.module.css";
 
 export const Task = (props) => {
   const [newText, setNewText] = useState(props.todo.text);
+  const [isEditing, setEditing] = useState("");
 
   function handleChange(e) {
     setNewText(e.target.value);
   }
 
   const notNewText = (e) => {
-    setNewText("");
-    props.setEditing("");
+    setNewText(props.todo.text);
+    setEditing("");
   };
 
   const GoOutOnEsc = (e) => {
-    if (e.code === "Escape") {
+    if (e.code !== "Escape") {
+      return setEditing(props.todo.id);
+    } else {
       notNewText();
     }
   };
 
-  const onBlur = () => {
-    props.setEditing(false);
-  };
+  // const onBlur = () => {
+  //   setNewText("");
+  //   setEditing("");
+  // };
 
   return (
     <div className={styles.task}>
       <>
-        <div>
+        <div className={styles.taskCheckboxDiv}>
           <input
             className={styles.taskCheckbox}
             checked={props.todo.completed}
@@ -37,14 +41,14 @@ export const Task = (props) => {
             onChange={() => props.changeStatus(props.todo.id)}
           />
         </div>
-        {props.isEditing === props.todo.id ? (
+        {isEditing === props.todo.id ? (
           <form
             className={styles.taskBlockEdit}
             onSubmit={(e) => {
               e.preventDefault();
               props.editTodo(props.todo.id, newText);
-              setNewText("");
-              props.setEditing(false);
+              setNewText(newText);
+              setEditing(false);
             }}
           >
             <input
@@ -56,26 +60,17 @@ export const Task = (props) => {
               type="text"
               onKeyUp={GoOutOnEsc}
               autoFocus
-              onBlur={onBlur}
+              // onBlur={onBlur}
             />
-
-            <button
-              className={styles.taskButtonEscEdit}
-              type="button"
-              onClick={notNewText}
-            >
-              Cancel
-            </button>
           </form>
         ) : (
           <p
             onDoubleClick={() => {
-              props.setEditing(props.todo.id);
+              setEditing(props.todo.id);
             }}
-            style={{
-              textDecoration: props.todo.completed && "line-through",
-              color: props.todo.completed && "rgb(235, 130, 148)",
-            }}
+            className={`${
+              props.todo.completed ? styles.taskTextCompleted : ""
+            }`}
           >
             {props.todo.text}
           </p>

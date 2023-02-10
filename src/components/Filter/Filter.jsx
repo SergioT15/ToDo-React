@@ -17,9 +17,6 @@ export const Filter = (props) => {
                 name={name}
                 isPressed={name === props.filter}
                 setFilter={props.setFilter}
-                todos={props.todos}
-                changeAllStatuses={props.changeAllStatuses}
-                deleteAllCompleted={props.deleteAllCompleted}
               />
             );
           })}

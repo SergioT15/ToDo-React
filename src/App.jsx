@@ -20,15 +20,16 @@ const filterNames = Object.keys(filterMap);
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("All");
-  const [isEditing, setEditing] = useState("");
+
 
   // Editing on doubleClick
   function editTodo(id, newName) {
     const editedTodo = todos.map((todo) => {
-      if (id === todo.id && newName.trim() !== "") {
-        return { ...todo, text: newName };
+      if (id !== todo.id) {
+        return todo;
       }
-      return todo;
+
+      return { ...todo, text: newName };
     });
     setTodos(editedTodo);
   }
@@ -46,8 +47,6 @@ const App = () => {
 
     setTodos([newTask, ...todos]);
   };
-
-  console.log(todos);
 
   // Change completed and uncompleted
   const changeStatus = (id) => {
@@ -69,9 +68,6 @@ const App = () => {
   //Change all statuses completed and incomplete
   const changeAllStatuses = () => {
     const updatedTodos = todos.map((todo) => {
-      if (!todos) {
-        return todo;
-      }
       return { ...todo, completed: !todo.completed };
     });
     setTodos(updatedTodos);
@@ -79,12 +75,10 @@ const App = () => {
 
   //Delete all completed tasks
   const deleteAllCompleted = () => {
-    const updatedTodos = todos.filter((todo) => todo.completed !== true);
+    const updatedTodos = todos.filter((todo) => !todo.completed);
 
     setTodos(updatedTodos);
   };
-
-  console.log();
 
   return (
     <div className={styles.app}>
@@ -97,8 +91,6 @@ const App = () => {
           deleteTodo={deleteTodo}
           filterMap={filterMap}
           filter={filter}
-          isEditing={isEditing}
-          setEditing={setEditing}
           editTodo={editTodo}
         />
         <Filter

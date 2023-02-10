@@ -14,8 +14,6 @@ export const Tasks = (props) => {
               todo={todo}
               changeStatus={props.changeStatus}
               deleteTodo={props.deleteTodo}
-              isEditing={props.isEditing}
-              setEditing={props.setEditing}
               editTodo={props.editTodo}
             />
           ))

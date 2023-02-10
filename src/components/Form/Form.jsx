@@ -15,10 +15,8 @@ export const Form = (props) => {
     setText(e.target.value);
   };
 
-  console.log(text);
-
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={`${styles.form} ${text ? styles.blabla : ''}`} onSubmit={handleSubmit}>
       <input
         className={styles.input}
         type="text"

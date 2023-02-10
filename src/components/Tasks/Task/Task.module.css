@@ -1,9 +1,5 @@
 .task {
   display: flex;
-}
-
-.task {
-  display: flex;
   padding: 0 10px;
   flex-direction: row;
   justify-content: center;
@@ -29,6 +25,10 @@ input:checked + p {
   width: 20px;
 }
 
+.taskCheckboxDiv {
+  margin-right: 8px;
+}
+
 .taskDeleteButton {
   background: url(/assets/trash.png) 0 0 /100% auto no-repeat;
   height: 30px;
@@ -39,23 +39,17 @@ input:checked + p {
   padding: 0 15px;
 }
 
+.taskTextCompleted {
+  text-decoration-line: line-through;
+  color: #EB8294
+}
+
 .taskInputEdit {
   height: 30px;
   flex-grow: 1;
-  width: 240px;
+  width: 290px;
   border-radius: 10px;
   padding: 0 10px;
   border: none;
   background: #6c8c97;
-}
-
-.taskButtonEscEdit {
-  width: 55px;
-  height: 28px;
-  margin: auto 0;
-  margin-left: 3px;
-}
-
-.taskBlockEdit {
-  display: flex;
 }

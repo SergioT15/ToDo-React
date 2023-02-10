@@ -1,5 +1,7 @@
 import React from "react";
 
+import styles from "./FilterButton.module.css"
+
 export const FilterButton = (props) => {
   const changeName = () => {
     props.setFilter(props.name);
@@ -11,10 +13,7 @@ export const FilterButton = (props) => {
         type="button"
         aria-pressed={props.isPressed}
         onClick={changeName}
-        style={{
-          backgroundColor: props.isPressed && "rgb(47, 79, 79)",
-          color: props.isPressed && "white",
-        }}
+        className={`${props.isPressed ? styles.filterButtonGreen : ''}`}
       >
         {props.name}
       </button>
