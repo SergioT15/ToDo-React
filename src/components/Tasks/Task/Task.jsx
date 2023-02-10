@@ -17,7 +17,7 @@ export const Task = (props) => {
     setEditing("");
   };
 
-  const GoOutOnEsc = (e) => {
+  const goOutOnEsc = (e) => {
     if (e.code !== "Escape") {
       return setEditing(props.todo.id);
     } else {
@@ -32,8 +32,11 @@ export const Task = (props) => {
 
   const handleChangeOnClick = (e) => {
     e.preventDefault();
-    props.editTodo(props.todo.id, newText);
-    setNewText(newText);
+    if (newText.trim() !== "") {
+      props.editTodo(props.todo.id, newText);
+      setNewText(newText);
+      setEditing(false);
+    }
     setEditing(false);
   };
 
@@ -49,18 +52,14 @@ export const Task = (props) => {
           />
         </div>
         {isEditing === props.todo.id ? (
-          <form
-            className={styles.taskBlockEdit}
-            onSubmit={handleChangeOnClick}
-          >
+          <form className={styles.taskBlockEdit} onSubmit={handleChangeOnClick}>
             <input
               className={styles.taskInputEdit}
-              key={props.id}
               placeholder="edit todo"
               value={newText}
               onChange={handleChange}
               type="text"
-              onKeyUp={GoOutOnEsc}
+              onKeyUp={goOutOnEsc}
               autoFocus
               // onBlur={onBlur}
             />

@@ -3,7 +3,7 @@ import styles from "./Filter.module.css";
 import { FilterButton } from "./FilterButton/FilterButton";
 
 export const Filter = (props) => {
-  const countCompleted = props.todos.filter((todo) => todo.completed !== true);
+  const countCompleted = props.todos.filter((todo) => !todo.completed);
 
   return (
     <div>

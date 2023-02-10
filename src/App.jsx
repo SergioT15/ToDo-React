@@ -19,7 +19,7 @@ const filterNames = Object.keys(filterMap);
 
 const App = () => {
   const [todos, setTodos] = useState([]);
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState(filterNames[0]);
 
 
   // Editing on doubleClick
@@ -28,7 +28,6 @@ const App = () => {
       if (id !== todo.id) {
         return todo;
       }
-
       return { ...todo, text: newName };
     });
     setTodos(editedTodo);
