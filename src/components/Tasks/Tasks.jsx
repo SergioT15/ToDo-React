@@ -6,7 +6,7 @@ export const Tasks = (props) => {
   return (
     <div className={styles.task}>
       {props.todos.length !== 0 ? (
-        props.todofiltered.map((todo) => (
+        props.todoFiltered[props.filter].map((todo) => (
           <Task
             key={todo.id}
             todo={todo}
