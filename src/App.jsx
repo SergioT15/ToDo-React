@@ -21,6 +21,7 @@ const App = () => {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState(filterNames[0]);
 
+  const todofiltered = todos.filter(filterMap[filter]);
 
   // Editing on doubleClick
   function editTodo(id, newName) {
@@ -85,6 +86,7 @@ const App = () => {
         <Title />
         <Form addTodo={addTodo} />
         <Tasks
+          todofiltered={todofiltered}
           todos={todos}
           changeStatus={changeStatus}
           deleteTodo={deleteTodo}
