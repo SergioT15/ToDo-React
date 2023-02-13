@@ -20,6 +20,7 @@ const filterNames = Object.keys(filterMap);
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState(filterNames[0]);
+  const [isComletedAll, setIsComletedAll] = useState(false);
 
   const todofiltered = todos.filter(filterMap[filter]);
 
@@ -68,7 +69,9 @@ const App = () => {
   //Change all statuses completed and incomplete
   const changeAllStatuses = () => {
     const updatedTodos = todos.map((todo) => {
-      return { ...todo, completed: !todo.completed };
+      setIsComletedAll(!isComletedAll);
+
+      return { ...todo, completed: isComletedAll };
     });
     setTodos(updatedTodos);
   };
@@ -90,8 +93,6 @@ const App = () => {
           todos={todos}
           changeStatus={changeStatus}
           deleteTodo={deleteTodo}
-          filterMap={filterMap}
-          filter={filter}
           editTodo={editTodo}
         />
         <Filter
