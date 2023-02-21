@@ -36,6 +36,8 @@ export const Task = (props) => {
       props.editTodo(props.todo.id, newText);
       setNewText(newText);
       setEditing(false);
+    } else {
+      setNewText(props.todo.text);
     }
     setEditing(false);
   };
