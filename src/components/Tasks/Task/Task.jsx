@@ -25,6 +25,7 @@ export const Task = (props) => {
     }
   };
 
+  //
   // const onBlur = () => {
   //   setNewText("");
   //   setEditing("");
