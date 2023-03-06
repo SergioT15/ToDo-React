@@ -2,8 +2,12 @@ import React from "react";
 import styles from "./Filter.module.css";
 import { FilterButton } from "./FilterButton/FilterButton";
 
+// import { useSelector } from "react-redux";
+
 export const Filter = (props) => {
   const countCompleted = props.todos.filter((todo) => !todo.completed);
+
+  // const todos = useSelector((state) => state.todos.todos);
 
   return (
     <div>

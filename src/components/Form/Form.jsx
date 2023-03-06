@@ -1,13 +1,22 @@
 import { useState } from "react";
+
 import React from "react";
+
+import { useDispatch } from "react-redux";
+
+import { addTodo } from "../../store/todoSlice";
+
 import styles from "./Form.module.css";
 
 export const Form = (props) => {
   const [text, setText] = useState("");
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.addTodo(text);
+    
+    dispatch(addTodo(text));
     setText("");
   };
 

@@ -1,8 +1,12 @@
 import { Task } from "./Task";
 
+// import { useSelector } from "react-redux";
+
 import styles from "./Tasks.module.css";
 
 export const Tasks = (props) => {
+  // const todos = useSelector((state) => state.todos.todos);
+
   return (
     <div className={styles.task}>
       {props.todos.length !== 0 ? (
