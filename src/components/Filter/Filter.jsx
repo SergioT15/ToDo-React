@@ -2,16 +2,20 @@ import React from "react";
 import styles from "./Filter.module.css";
 import { FilterButton } from "./FilterButton/FilterButton";
 
-// import { useSelector } from "react-redux";
+import { changeAllStatuses, deleteAllCompleted } from "../../store/todoSlice";
+
+import { useSelector, useDispatch } from "react-redux";
 
 export const Filter = (props) => {
-  const countCompleted = props.todos.filter((todo) => !todo.completed);
+  const dispatch = useDispatch();
 
-  // const todos = useSelector((state) => state.todos.todos);
+  const todos = useSelector((state) => state.todos.todos);
+
+  const countCompleted = todos.filter((todo) => !todo.completed);
 
   return (
     <div>
-      {props.todos.length !== 0 && (
+      {!!todos.length && (
         <div className={styles.filter}>
           <p className={styles.filterCounter}>
             {countCompleted.length} items left
@@ -24,8 +28,8 @@ export const Filter = (props) => {
               setFilter={props.setFilter}
             />
           ))}
-          <button onClick={() => props.changeAllStatuses()}>Check</button>
-          <button onClick={props.deleteAllCompleted}>Clear</button>{" "}
+          <button onClick={() => dispatch(changeAllStatuses())}>Check</button>
+          <button onClick={() => dispatch(deleteAllCompleted())}>Clear</button>
         </div>
       )}
     </div>

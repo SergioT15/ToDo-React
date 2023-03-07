@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 export const todoSlice = createSlice({
   name: "todos",
   initialState: {
-    todos: {},
-    isComletedAll: true,
+    todos: [],
+    isCompletedAll: true,
     filter: "All",
   },
   reducers: {
@@ -23,10 +23,9 @@ export const todoSlice = createSlice({
       state.todos.unshift(newTask);
     },
 
-
     // Change completed and uncompleted
     changeStatus: (state, action) => {
-      state.todos.map((todo) => {
+      state.todos = state.todos.map((todo) => {
         if (action.payload !== todo.id) {
           return todo;
         }
@@ -36,12 +35,13 @@ export const todoSlice = createSlice({
 
     //Delete task
     deleteTodo: (state, action) => {
-      state.todos.filter((todo) => todo.id !== action.payload);
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
 
     // Editing on doubleClick
     editTodo: (state, action) => {
-      state.todos.map((todo) => {
+      console.log(action.payload);
+      state.todos = state.todos.map((todo) => {
         if (action.payload.id !== todo.id) {
           return todo;
         }
@@ -50,16 +50,16 @@ export const todoSlice = createSlice({
     },
 
     //Change all statuses completed and incomplete
-    changeAllStatuses: (state, action) => {
-      state.todos.map((todo) => {
-        state.isComletedAll(!action.payload);
-        return { ...todo, completed: action.payload };
+    changeAllStatuses: (state) => {
+      const isFalsyTodo = state.todos.some((item) => !item.completed);
+      state.todos = state.todos.map((todo) => {
+        return { ...todo, completed: isFalsyTodo };
       });
     },
 
     //Delete all completed tasks
-    deleteAllCompleted: (state, action) => {
-      state.todos.filter((todo) => !todo.completed);
+    deleteAllCompleted: (state) => {
+      state.todos = state.todos.filter((todo) => !todo.completed);
     },
   },
 });

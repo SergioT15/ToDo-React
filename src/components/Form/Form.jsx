@@ -15,7 +15,7 @@ export const Form = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     dispatch(addTodo(text));
     setText("");
   };
@@ -25,7 +25,7 @@ export const Form = (props) => {
   };
 
   return (
-    <form className={`${styles.form} ${text ? styles.blabla : ''}`} onSubmit={handleSubmit}>
+    <form className={`${styles.form}`} onSubmit={handleSubmit}>
       <input
         className={styles.input}
         type="text"

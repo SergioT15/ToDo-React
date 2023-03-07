@@ -1,4 +1,6 @@
-import React from "react";
+import { useDispatch } from "react-redux";
+
+import { changeStatus, editTodo, deleteTodo } from "../../../store/todoSlice";
 
 import { useState } from "react";
 
@@ -7,6 +9,8 @@ import styles from "./Task.module.css";
 export const Task = (props) => {
   const [newText, setNewText] = useState(props.todo.text);
   const [isEditing, setEditing] = useState("");
+
+  const dispatch = useDispatch();
 
   function handleChange(e) {
     setNewText(e.target.value);
@@ -25,7 +29,6 @@ export const Task = (props) => {
     }
   };
 
-  //
   // const onBlur = () => {
   //   setNewText("");
   //   setEditing("");
@@ -34,7 +37,7 @@ export const Task = (props) => {
   const handleChangeOnClick = (e) => {
     e.preventDefault();
     if (newText.trim() !== "") {
-      props.editTodo(props.todo.id, newText);
+      dispatch(editTodo({ id: props.todo.id, text: newText }));
       setNewText(newText);
       setEditing(false);
     } else {
@@ -51,7 +54,7 @@ export const Task = (props) => {
             className={styles.taskCheckbox}
             checked={props.todo.completed}
             type="checkbox"
-            onChange={() => props.changeStatus(props.todo.id)}
+            onChange={() => dispatch(changeStatus(props.todo.id))}
           />
         </div>
         {isEditing === props.todo.id ? (
@@ -81,7 +84,7 @@ export const Task = (props) => {
         )}
         <button
           className={styles.taskDeleteButton}
-          onClick={() => props.deleteTodo(props.todo.id)}
+          onClick={() => dispatch(deleteTodo(props.todo.id))}
         ></button>
       </>
     </div>
