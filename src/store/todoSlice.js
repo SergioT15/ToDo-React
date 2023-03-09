@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,7 +6,6 @@ export const todoSlice = createSlice({
   name: "todos",
   initialState: {
     todos: [],
-    isCompletedAll: true,
     filter: "All",
   },
   reducers: {
@@ -51,9 +50,9 @@ export const todoSlice = createSlice({
 
     //Change all statuses completed and incomplete
     changeAllStatuses: (state) => {
-      const isFalsyTodo = state.todos.some((item) => !item.completed);
+      const isFalseTodo = state.todos.some((item) => !item.completed);
       state.todos = state.todos.map((todo) => {
-        return { ...todo, completed: isFalsyTodo };
+        return { ...todo, completed: isFalseTodo };
       });
     },
 
@@ -61,8 +60,26 @@ export const todoSlice = createSlice({
     deleteAllCompleted: (state) => {
       state.todos = state.todos.filter((todo) => !todo.completed);
     },
+
+    //Filter All Completed Active
+    filterTodo: (state, action) => {
+      state.filter = action.payload;
+    },
   },
 });
+
+export const todoFiltered = createSelector(
+  ({ todos }) => todos,
+  (todos) => {
+    if (todos.filter === "All") return todos.todos;
+
+    if (todos.filter === "Active")
+      return todos.todos.filter((todo) => !todo.completed);
+
+    if (todos.filter === "Completed")
+      return todos.todos.filter((todo) => todo.completed);
+  }
+);
 
 export const {
   addTodo,
@@ -71,6 +88,7 @@ export const {
   editTodo,
   changeAllStatuses,
   deleteAllCompleted,
+  filterTodo,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

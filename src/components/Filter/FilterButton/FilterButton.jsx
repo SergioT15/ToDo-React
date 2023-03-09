@@ -2,9 +2,15 @@ import React from "react";
 
 import styles from "./FilterButton.module.css";
 
+import { useDispatch } from "react-redux";
+
+import { filterTodo } from "../../../store/todoSlice";
+
 export const FilterButton = (props) => {
+  const dispatch = useDispatch();
+
   const changeName = () => {
-    props.setFilter(props.name);
+    dispatch(filterTodo(props.name));
   };
 
   return (

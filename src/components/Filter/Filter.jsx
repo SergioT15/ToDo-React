@@ -13,6 +13,10 @@ export const Filter = (props) => {
 
   const countCompleted = todos.filter((todo) => !todo.completed);
 
+  const filterNames = ["All", "Active", "Completed"];
+
+  const filter = useSelector((state) => state.todos.filter);
+
   return (
     <div>
       {!!todos.length && (
@@ -20,12 +24,12 @@ export const Filter = (props) => {
           <p className={styles.filterCounter}>
             {countCompleted.length} items left
           </p>
-          {props.filterNames.map((name, index) => (
+          {filterNames.map((name, index) => (
             <FilterButton
               key={index}
               name={name}
-              isPressed={name === props.filter}
-              setFilter={props.setFilter}
+              isPressed={name === filter}
+              // setFilter={props.setFilter}
             />
           ))}
           <button onClick={() => dispatch(changeAllStatuses())}>Check</button>
