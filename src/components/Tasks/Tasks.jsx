@@ -14,15 +14,7 @@ export const Tasks = (props) => {
   return (
     <div className={styles.task}>
       {!!todos.length ? (
-        todoFiltere.map((todo) => (
-          <Task
-            key={todo.id}
-            todo={todo}
-            // changeStatus={props.changeStatus}
-            // deleteTodo={props.deleteTodo}
-            // editTodo={props.editTodo}
-          />
-        ))
+        todoFiltere.map((todo) => <Task key={todo.id} todo={todo} />)
       ) : (
         <h3> Tasks not found</h3>
       )}

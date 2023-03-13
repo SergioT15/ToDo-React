@@ -6,7 +6,7 @@ import { changeAllStatuses, deleteAllCompleted } from "../../store/todoSlice";
 
 import { useSelector, useDispatch } from "react-redux";
 
-export const Filter = (props) => {
+export const Filter = () => {
   const dispatch = useDispatch();
 
   const todos = useSelector((state) => state.todos.todos);
@@ -25,12 +25,7 @@ export const Filter = (props) => {
             {countCompleted.length} items left
           </p>
           {filterNames.map((name, index) => (
-            <FilterButton
-              key={index}
-              name={name}
-              isPressed={name === filter}
-              // setFilter={props.setFilter}
-            />
+            <FilterButton key={index} name={name} isPressed={name === filter} />
           ))}
           <button onClick={() => dispatch(changeAllStatuses())}>Check</button>
           <button onClick={() => dispatch(deleteAllCompleted())}>Clear</button>
