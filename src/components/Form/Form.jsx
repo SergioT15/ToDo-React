@@ -6,7 +6,8 @@ import { useDispatch } from "react-redux";
 
 import { addTodo } from "../../store/todoSlice";
 
-import styles from "./Form.module.css";
+// import styles from "./Form.module.css";
+import { FormStyled } from "./Form.styled";
 
 export const Form = (props) => {
   const [text, setText] = useState("");
@@ -25,15 +26,15 @@ export const Form = (props) => {
   };
 
   return (
-    <form className={`${styles.form}`} onSubmit={handleSubmit}>
+    <FormStyled onSubmit={handleSubmit}>
       <input
-        className={styles.input}
+        className="input"
         type="text"
         placeholder="Add new todo"
         value={text}
         onChange={handleChange}
       />
-      <button className={styles.buttonForm}>Add</button>
-    </form>
+      <button className="buttonForm">Add</button>
+    </FormStyled>
   );
 };

@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 
 import { todoFiltered } from "../../store/todoSlice";
 
-import styles from "./Tasks.module.css";
+// import styles from "./Tasks.module.css";
+import { TasksStyled } from "./Tasks.styled";
 
 export const Tasks = (props) => {
   const todos = useSelector((state) => state.todos.todos);
@@ -12,12 +13,12 @@ export const Tasks = (props) => {
   const todoFiltere = useSelector(todoFiltered);
 
   return (
-    <div className={styles.task}>
+    <TasksStyled>
       {!!todos.length ? (
         todoFiltere.map((todo) => <Task key={todo.id} todo={todo} />)
       ) : (
         <h3> Tasks not found</h3>
       )}
-    </div>
+    </TasksStyled>
   );
 };

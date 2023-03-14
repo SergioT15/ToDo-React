@@ -4,7 +4,8 @@ import { changeStatus, editTodo, deleteTodo } from "../../../store/todoSlice";
 
 import { useState } from "react";
 
-import styles from "./Task.module.css";
+// import styles from "./Task.module.css";
+import { TaskStyled } from "./Task.styled";
 
 export const Task = (props) => {
   const [newText, setNewText] = useState(props.todo.text);
@@ -47,20 +48,20 @@ export const Task = (props) => {
   };
 
   return (
-    <div className={styles.task}>
+    <TaskStyled>
       <>
-        <div className={styles.taskCheckboxDiv}>
+        <div className="taskCheckboxDiv">
           <input
-            className={styles.taskCheckbox}
+            className="taskCheckbox"
             checked={props.todo.completed}
             type="checkbox"
             onChange={() => dispatch(changeStatus(props.todo.id))}
           />
         </div>
         {isEditing === props.todo.id ? (
-          <form className={styles.taskBlockEdit} onSubmit={handleChangeOnClick}>
+          <form className="taskBlockEdit" onSubmit={handleChangeOnClick}>
             <input
-              className={styles.taskInputEdit}
+              className="taskInputEdit"
               placeholder="edit todo"
               value={newText}
               onChange={handleChange}
@@ -72,21 +73,22 @@ export const Task = (props) => {
           </form>
         ) : (
           <p
+            className="taskP"
             onDoubleClick={() => {
               setEditing(props.todo.id);
             }}
-            className={`${
-              props.todo.completed ? styles.taskTextCompleted : ""
-            }`}
+            // className={`${
+            //   props.todo.completed ? styles.taskTextCompleted : ""
+            // }`}
           >
             {props.todo.text}
           </p>
         )}
         <button
-          className={styles.taskDeleteButton}
+          className="taskDeleteButton"
           onClick={() => dispatch(deleteTodo(props.todo.id))}
         ></button>
       </>
-    </div>
+    </TaskStyled>
   );
 };
