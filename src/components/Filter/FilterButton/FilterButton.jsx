@@ -1,6 +1,7 @@
 import React from "react";
 
-import styles from "./FilterButton.module.css";
+// import styles from "./FilterButton.module.css";
+import { FilterButtonStyled } from "./FilterButton.styled";
 
 import { useDispatch } from "react-redux";
 
@@ -14,14 +15,14 @@ export const FilterButton = (props) => {
   };
 
   return (
-    <div>
+    <FilterButtonStyled   isPressedTodo={props.isPressed} >
       <button
         type="button"
         onClick={changeName}
-        className={`${props.isPressed ? styles.filterButtonGreen : ""}`}
+        className="filterButtonGreen"
       >
         {props.name}
       </button>
-    </div>
+    </FilterButtonStyled>
   );
 };

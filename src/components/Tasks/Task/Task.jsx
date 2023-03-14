@@ -48,7 +48,7 @@ export const Task = (props) => {
   };
 
   return (
-    <TaskStyled>
+    <TaskStyled isCompletedTodo={props.todo.completed}>
       <>
         <div className="taskCheckboxDiv">
           <input
@@ -77,6 +77,7 @@ export const Task = (props) => {
             onDoubleClick={() => {
               setEditing(props.todo.id);
             }}
+
             // className={`${
             //   props.todo.completed ? styles.taskTextCompleted : ""
             // }`}

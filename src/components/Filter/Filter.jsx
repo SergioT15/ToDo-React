@@ -1,5 +1,7 @@
 import React from "react";
-import styles from "./Filter.module.css";
+// import styles from "./Filter.module.css";
+import { FilterStyled } from "./Filter.styled";
+
 import { FilterButton } from "./FilterButton/FilterButton";
 
 import { changeAllStatuses, deleteAllCompleted } from "../../store/todoSlice";
@@ -18,12 +20,10 @@ export const Filter = () => {
   const filter = useSelector((state) => state.todos.filter);
 
   return (
-    <div>
+    <FilterStyled>
       {!!todos.length && (
-        <div className={styles.filter}>
-          <p className={styles.filterCounter}>
-            {countCompleted.length} items left
-          </p>
+        <div className="filter">
+          <p className="filterCounter">{countCompleted.length} items left</p>
           {filterNames.map((name, index) => (
             <FilterButton key={index} name={name} isPressed={name === filter} />
           ))}
@@ -31,6 +31,6 @@ export const Filter = () => {
           <button onClick={() => dispatch(deleteAllCompleted())}>Clear</button>
         </div>
       )}
-    </div>
+    </FilterStyled>
   );
 };

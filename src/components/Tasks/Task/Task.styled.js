@@ -1,6 +1,5 @@
-import styled from "styled-components";
-
-
+import styled, { css } from "styled-components";
+import img from "../../../assets/trash.png";
 
 export const TaskStyled = styled.div`
   display: flex;
@@ -16,6 +15,15 @@ export const TaskStyled = styled.div`
   .taskP {
     flex-grow: 1;
     padding: 5px 0px;
+
+    ${(p) =>
+      p.isCompletedTodo &&
+      css`
+        text-decoration-line: line-through;
+        color: #eb8294;
+      `}/* 
+    text-decoration-line: ${(p) =>
+      p.isCompletedTodo ? "line-through" : "none"}; */
   }
 
   input:checked + p {
@@ -33,7 +41,8 @@ export const TaskStyled = styled.div`
   }
 
   .taskDeleteButton {
-
+    
+    background-image: url(${img});
     /* background: url(/assets/trash.png) 0 0 /100% auto no-repeat; */
     height: 30px;
     width: 30px;
@@ -41,12 +50,6 @@ export const TaskStyled = styled.div`
     color: aliceblue;
     border-radius: 9px;
     padding: 0 15px;
-  }
-
-  .taskTextCompleted {
-
-    text-decoration-line: line-through;
-    color: #eb8294;
   }
 
   .taskInputEdit {
