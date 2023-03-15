@@ -6,18 +6,18 @@ import { FilterButton } from "./FilterButton/FilterButton";
 
 import { changeAllStatuses, deleteAllCompleted } from "../../store/todoSlice";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-export const Filter = () => {
-  const dispatch = useDispatch();
+export const Filter: React.FC = () => {
+  const dispatch = useAppDispatch();
 
-  const todos = useSelector((state) => state.todos.todos);
+  const todos = useAppSelector((state) => state.todos.todos);
 
   const countCompleted = todos.filter((todo) => !todo.completed);
 
   const filterNames = ["All", "Active", "Completed"];
 
-  const filter = useSelector((state) => state.todos.filter);
+  const filter = useAppSelector((state) => state.todos.filter);
 
   return (
     <FilterStyled>

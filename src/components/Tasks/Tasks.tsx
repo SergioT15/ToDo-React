@@ -1,16 +1,27 @@
+import React from "react";
 import { Task } from "./Task";
 
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../store/hooks";
 
 import { todoFiltered } from "../../store/todoSlice";
 
 // import styles from "./Tasks.module.css";
 import { TasksStyled } from "./Tasks.styled";
 
-export const Tasks = (props) => {
-  const todos = useSelector((state) => state.todos.todos);
+// type ITodo = {
+//   text: string;
+//   id: string;
+//   completed: boolean;
+// };
 
-  const todoFiltere = useSelector(todoFiltered);
+// type ITodoState = {
+//   todo: ITodo[];
+// };
+
+export const Tasks: React.FC = () => {
+  const todos = useAppSelector((state) => state.todos.todos);
+
+  const todoFiltere = useAppSelector(todoFiltered);
 
   return (
     <TasksStyled>

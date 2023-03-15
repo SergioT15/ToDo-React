@@ -1,16 +1,29 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 
 import { v4 as uuidv4 } from "uuid";
 
+type Todo = {
+  text: string;
+  id: string;
+  completed: boolean;
+};
+
+type TodoState = {
+  todos: Todo[];
+  filter: string;
+};
+
+const initialState: TodoState = {
+  todos: [],
+  filter: "All",
+};
+
 export const todoSlice = createSlice({
   name: "todos",
-  initialState: {
-    todos: [],
-    filter: "All",
-  },
+  initialState,
   reducers: {
     // Add new task
-    addTodo: (state, action) => {
+    addTodo: (state, action: PayloadAction<string>) => {
       if (!action.payload.trim()) {
         return;
       }
@@ -19,11 +32,13 @@ export const todoSlice = createSlice({
         id: uuidv4(),
         completed: false,
       };
-      state.todos.unshift(newTask);
+      if (newTask) {
+        state.todos.unshift(newTask);
+      }
     },
 
     // Change completed and uncompleted
-    changeStatus: (state, action) => {
+    changeStatus: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.map((todo) => {
         if (action.payload !== todo.id) {
           return todo;
@@ -33,12 +48,12 @@ export const todoSlice = createSlice({
     },
 
     //Delete task
-    deleteTodo: (state, action) => {
+    deleteTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
 
     // Editing on doubleClick
-    editTodo: (state, action) => {
+    editTodo: (state, action: PayloadAction<{ id: string; text: string }>) => {
       console.log(action.payload);
       state.todos = state.todos.map((todo) => {
         if (action.payload.id !== todo.id) {

@@ -3,12 +3,12 @@ import React from "react";
 // import styles from "./FilterButton.module.css";
 import { FilterButtonStyled } from "./FilterButton.styled";
 
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../store/hooks";
 
 import { filterTodo } from "../../../store/todoSlice";
 
 export const FilterButton = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const changeName = () => {
     dispatch(filterTodo(props.name));

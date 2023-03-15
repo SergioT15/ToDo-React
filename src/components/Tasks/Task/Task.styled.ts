@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import img from "../../../assets/trash.png";
 
 export const TaskStyled = styled.div`
   display: flex;
@@ -41,15 +40,15 @@ export const TaskStyled = styled.div`
   }
 
   .taskDeleteButton {
-    
-    background-image: url(${img});
     /* background: url(/assets/trash.png) 0 0 /100% auto no-repeat; */
+    background-color: transparent;
     height: 30px;
     width: 30px;
     margin-left: 5px;
     color: aliceblue;
     border-radius: 9px;
     padding: 0 15px;
+    position: relative;
   }
 
   .taskInputEdit {
@@ -60,5 +59,14 @@ export const TaskStyled = styled.div`
     padding: 0 10px;
     border: none;
     background: #6c8c97;
+  }
+
+  .imgTask {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    max-width: none;
+    width: 25px;
+    height: 25px;
   }
 `;

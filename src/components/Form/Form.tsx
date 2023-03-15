@@ -2,26 +2,26 @@ import { useState } from "react";
 
 import React from "react";
 
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../store/hooks";
 
 import { addTodo } from "../../store/todoSlice";
 
 // import styles from "./Form.module.css";
 import { FormStyled } from "./Form.styled";
 
-export const Form = (props) => {
+export const Form: React.FC = (props) => {
   const [text, setText] = useState("");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     dispatch(addTodo(text));
     setText("");
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 

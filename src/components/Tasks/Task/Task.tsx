@@ -1,28 +1,41 @@
-import { useDispatch } from "react-redux";
+import React from "react";
+
+import { useAppDispatch } from "../../../store/hooks";
 
 import { changeStatus, editTodo, deleteTodo } from "../../../store/todoSlice";
 
 import { useState } from "react";
 
+import img from "../../../assets/trash.png";
 // import styles from "./Task.module.css";
 import { TaskStyled } from "./Task.styled";
 
-export const Task = (props) => {
-  const [newText, setNewText] = useState(props.todo.text);
-  const [isEditing, setEditing] = useState("");
+interface ITodo {
+  text: string;
+  id: string;
+  completed: boolean;
+}
 
-  const dispatch = useDispatch();
+interface TodoState {
+  todo: ITodo;
+}
 
-  function handleChange(e) {
+export const Task: React.FC<TodoState> = (props) => {
+  const [newText, setNewText] = useState<string>(props.todo.text);
+  const [isEditing, setEditing] = useState<string>("");
+
+  const dispatch = useAppDispatch();
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewText(e.target.value);
   }
 
-  const notNewText = (e) => {
+  const notNewText = () => {
     setNewText(props.todo.text);
     setEditing("");
   };
 
-  const goOutOnEsc = (e) => {
+  const goOutOnEsc = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code !== "Escape") {
       return setEditing(props.todo.id);
     } else {
@@ -40,11 +53,11 @@ export const Task = (props) => {
     if (newText.trim() !== "") {
       dispatch(editTodo({ id: props.todo.id, text: newText }));
       setNewText(newText);
-      setEditing(false);
+      setEditing("");
     } else {
       setNewText(props.todo.text);
     }
-    setEditing(false);
+    setEditing("");
   };
 
   return (
@@ -88,8 +101,13 @@ export const Task = (props) => {
         <button
           className="taskDeleteButton"
           onClick={() => dispatch(deleteTodo(props.todo.id))}
-        ></button>
+        >
+          <img className="imgTask" src={img} alt="Ypss" />
+        </button>{" "}
       </>
     </TaskStyled>
   );
 };
+
+
+
