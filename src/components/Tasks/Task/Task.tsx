@@ -16,11 +16,11 @@ interface ITodo {
   completed: boolean;
 }
 
-interface TodoState {
+interface ITodoState {
   todo: ITodo;
 }
 
-export const Task: React.FC<TodoState> = (props) => {
+export const Task: React.FC<ITodoState> = (props) => {
   const [newText, setNewText] = useState<string>(props.todo.text);
   const [isEditing, setEditing] = useState<string>("");
 
@@ -48,7 +48,7 @@ export const Task: React.FC<TodoState> = (props) => {
   //   setEditing("");
   // };
 
-  const handleChangeOnClick = (e) => {
+  const handleChangeOnClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newText.trim() !== "") {
       dispatch(editTodo({ id: props.todo.id, text: newText }));
@@ -62,52 +62,47 @@ export const Task: React.FC<TodoState> = (props) => {
 
   return (
     <TaskStyled isCompletedTodo={props.todo.completed}>
-      <>
-        <div className="taskCheckboxDiv">
+      <div className="taskCheckboxDiv">
+        <input
+          className="taskCheckbox"
+          type="checkbox"
+          checked={props.todo.completed}
+          onChange={() => dispatch(changeStatus(props.todo.id))}
+        />
+      </div>
+      {isEditing === props.todo.id ? (
+        <form className="taskBlockEdit" onSubmit={handleChangeOnClick}>
           <input
-            className="taskCheckbox"
-            checked={props.todo.completed}
-            type="checkbox"
-            onChange={() => dispatch(changeStatus(props.todo.id))}
+            className="taskInputEdit"
+            placeholder="edit todo"
+            value={newText}
+            onChange={handleChange}
+            type="text"
+            onKeyUp={goOutOnEsc}
+            autoFocus
+            // onBlur={onBlur}
           />
-        </div>
-        {isEditing === props.todo.id ? (
-          <form className="taskBlockEdit" onSubmit={handleChangeOnClick}>
-            <input
-              className="taskInputEdit"
-              placeholder="edit todo"
-              value={newText}
-              onChange={handleChange}
-              type="text"
-              onKeyUp={goOutOnEsc}
-              autoFocus
-              // onBlur={onBlur}
-            />
-          </form>
-        ) : (
-          <p
-            className="taskP"
-            onDoubleClick={() => {
-              setEditing(props.todo.id);
-            }}
+        </form>
+      ) : (
+        <p
+          className="taskP"
+          onDoubleClick={() => {
+            setEditing(props.todo.id);
+          }}
 
-            // className={`${
-            //   props.todo.completed ? styles.taskTextCompleted : ""
-            // }`}
-          >
-            {props.todo.text}
-          </p>
-        )}
-        <button
-          className="taskDeleteButton"
-          onClick={() => dispatch(deleteTodo(props.todo.id))}
+          // className={`${
+          //   props.todo.completed ? styles.taskTextCompleted : ""
+          // }`}
         >
-          <img className="imgTask" src={img} alt="Ypss" />
-        </button>{" "}
-      </>
+          {props.todo.text}
+        </p>
+      )}
+      <button
+        className="taskDeleteButton"
+        onClick={() => dispatch(deleteTodo(props.todo.id))}
+      >
+        <img className="imgTask" src={img} alt="Ypss" />
+      </button>{" "}
     </TaskStyled>
   );
 };
-
-
-

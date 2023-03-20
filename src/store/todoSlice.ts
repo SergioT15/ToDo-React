@@ -2,18 +2,20 @@ import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 
 import { v4 as uuidv4 } from "uuid";
 
-type Todo = {
+import { RootState } from "./store";
+
+type TTodo = {
   text: string;
   id: string;
   completed: boolean;
 };
 
-type TodoState = {
-  todos: Todo[];
-  filter: string;
+type TTodoState = {
+  todos: TTodo[];
+  filter?: string;
 };
 
-const initialState: TodoState = {
+const initialState: TTodoState = {
   todos: [],
   filter: "All",
 };
@@ -54,7 +56,7 @@ export const todoSlice = createSlice({
 
     // Editing on doubleClick
     editTodo: (state, action: PayloadAction<{ id: string; text: string }>) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.todos = state.todos.map((todo) => {
         if (action.payload.id !== todo.id) {
           return todo;
@@ -77,15 +79,19 @@ export const todoSlice = createSlice({
     },
 
     //Filter All Completed Active
-    filterTodo: (state, action) => {
+    filterTodo: (state, action: PayloadAction<string>) => {
       state.filter = action.payload;
     },
   },
 });
 
+// const getShowFiltered = (todos) => todos.todos.filter;
+// const getNotes = (todos) => todos.todos.todos
+
 export const todoFiltered = createSelector(
-  ({ todos }) => todos,
+  ({ todos }: RootState) => todos,
   (todos) => {
+    // console.log(todos);
     if (todos.filter === "All") return todos.todos;
 
     if (todos.filter === "Active")
