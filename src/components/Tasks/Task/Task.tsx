@@ -2,7 +2,12 @@ import React from "react";
 
 import { useAppDispatch } from "../../../store/hooks";
 
-import { changeStatus, editTodo, deleteTodo } from "../../../store/todoSlice";
+import {
+  changeStatus,
+  editTodo,
+  deleteTodo,
+  TTodo,
+} from "../../../store/todoSlice";
 
 import { useState } from "react";
 
@@ -10,14 +15,8 @@ import img from "../../../assets/trash.png";
 // import styles from "./Task.module.css";
 import { TaskStyled } from "./Task.styled";
 
-interface ITodo {
-  text: string;
-  id: string;
-  completed: boolean;
-}
-
 interface ITodoState {
-  todo: ITodo;
+  todo: TTodo;
 }
 
 export const Task: React.FC<ITodoState> = (props) => {
@@ -62,6 +61,7 @@ export const Task: React.FC<ITodoState> = (props) => {
 
   return (
     <TaskStyled isCompletedTodo={props.todo.completed}>
+      {console.log(props.todo.completed)}
       <div className="taskCheckboxDiv">
         <input
           className="taskCheckbox"

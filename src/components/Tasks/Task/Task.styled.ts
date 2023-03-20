@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 type TProps = {
   isCompletedTodo: boolean;
@@ -19,15 +19,13 @@ export const TaskStyled = styled.div<TProps>`
     flex-grow: 1;
     padding: 5px 0px;
 
-    ${(props) =>
-      props.isCompletedTodo &&
-      css`
-        text-decoration-line: line-through;
-        color: #eb8294;
-      `}
+    color: ${({ isCompletedTodo }) =>
+      isCompletedTodo ? "#eb8294" : ""};
 
-    /* text-decoration-line: ${(props) =>
-      props.isCompletedTodo ? "line-through" : "none"}; */
+    /* text-decoration: ${(isCompletedTodo: boolean) =>
+      isCompletedTodo ? "line-through" : "none"};
+
+    text-align: ${(props: boolean) => console.log(props)}; */
   }
 
   input:checked + p {
