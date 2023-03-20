@@ -61,7 +61,6 @@ export const Task: React.FC<ITodoState> = (props) => {
 
   return (
     <TaskStyled isCompletedTodo={props.todo.completed}>
-      {console.log(props.todo.completed)}
       <div className="taskCheckboxDiv">
         <input
           className="taskCheckbox"
