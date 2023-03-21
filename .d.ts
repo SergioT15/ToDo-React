@@ -4,4 +4,4 @@ declare module "*.png";
 // declare module "*.jpg";
 
 // declare module "styled-components";
-declare module "uuid";
+// declare module "uuid";

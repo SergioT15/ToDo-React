@@ -34,9 +34,7 @@ export const todoSlice = createSlice({
         id: uuidv4(),
         completed: false,
       };
-      if (newTask) {
-        state.todos.unshift(newTask);
-      }
+      state.todos.unshift(newTask);
     },
 
     // Change completed and uncompleted
@@ -84,9 +82,6 @@ export const todoSlice = createSlice({
     },
   },
 });
-
-// const getShowFiltered = (todos) => todos.todos.filter;
-// const getNotes = (todos) => todos.todos.todos
 
 export const todoFiltered = createSelector(
   ({ todos }: RootState) => todos,
