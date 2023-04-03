@@ -3,15 +3,18 @@ import React from "react";
 // import styles from "./FilterButton.module.css";
 import { FilterButtonStyled } from "./FilterButton.styled";
 
-import { useAppDispatch } from "../../../store/hooks";
+// import { useAppDispatch } from "../../../store/hooks";
 
-import { filterTodo } from "../../../store/todoSlice";
+// import { filterTodo } from "../../../store/todoSlice";
+import { useFiltereTodoMutation } from "../../../store/services/TodoService";
 
 export const FilterButton = (props) => {
-  const dispatch = useAppDispatch();
+  const [filtereTodo] = useFiltereTodoMutation()
+  // const dispatch = useAppDispatch();
 
   const changeName = () => {
-    dispatch(filterTodo(props.name));
+    filtereTodo({filter: props.name});
+    console.log(props.name);
   };
 
   return (

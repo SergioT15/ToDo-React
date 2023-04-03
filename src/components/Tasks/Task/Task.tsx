@@ -2,28 +2,30 @@ import React from "react";
 
 import { useAppDispatch } from "../../../store/hooks";
 
-import {
-  changeStatus,
-  editTodo,
-  deleteTodo,
-  TTodo,
-} from "../../../store/todoSlice";
+import { TTodo } from "../../../store/todoSlice";
 
 import { useState } from "react";
 
 import img from "../../../assets/trash.png";
 // import styles from "./Task.module.css";
 import { TaskStyled } from "./Task.styled";
+import {
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+  useChangeStatusMutation,
+} from "../../../store/services/TodoService";
 
 interface ITodoState {
   todo: TTodo;
 }
 
 export const Task: React.FC<ITodoState> = (props) => {
+  const [editTodo] = useUpdateTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [changeStatus] = useChangeStatusMutation();
+
   const [newText, setNewText] = useState<string>(props.todo.text);
   const [isEditing, setEditing] = useState<string>("");
-
-  const dispatch = useAppDispatch();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewText(e.target.value);
@@ -36,7 +38,7 @@ export const Task: React.FC<ITodoState> = (props) => {
 
   const goOutOnEsc = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code !== "Escape") {
-      return setEditing(props.todo.id);
+      return setEditing(props.todo._id);
     } else {
       notNewText();
     }
@@ -50,7 +52,7 @@ export const Task: React.FC<ITodoState> = (props) => {
   const handleChangeOnClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newText.trim() !== "") {
-      dispatch(editTodo({ id: props.todo.id, text: newText }));
+      editTodo({ _id: props.todo._id, text: newText });
       setNewText(newText);
       setEditing("");
     } else {
@@ -66,10 +68,10 @@ export const Task: React.FC<ITodoState> = (props) => {
           className="taskCheckbox"
           type="checkbox"
           checked={props.todo.completed}
-          onChange={() => dispatch(changeStatus(props.todo.id))}
+          onChange={() => changeStatus( {_id: props.todo._id, completed: !props.todo.completed})}
         />
       </div>
-      {isEditing === props.todo.id ? (
+      {isEditing === props.todo._id ? (
         <form className="taskBlockEdit" onSubmit={handleChangeOnClick}>
           <input
             className="taskInputEdit"
@@ -86,7 +88,7 @@ export const Task: React.FC<ITodoState> = (props) => {
         <p
           className="taskP"
           onDoubleClick={() => {
-            setEditing(props.todo.id);
+            setEditing(props.todo._id);
           }}
 
           // className={`${
@@ -98,7 +100,7 @@ export const Task: React.FC<ITodoState> = (props) => {
       )}
       <button
         className="taskDeleteButton"
-        onClick={() => dispatch(deleteTodo(props.todo.id))}
+        onClick={() => deleteTodo({ _id: props.todo._id })}
       >
         <img className="imgTask" src={img} alt="Ypss" />
       </button>{" "}

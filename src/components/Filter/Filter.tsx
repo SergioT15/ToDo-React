@@ -7,13 +7,13 @@ import { FilterButton } from "./FilterButton/FilterButton";
 import { changeAllStatuses, deleteAllCompleted } from "../../store/todoSlice";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useGetAllTodosQuery } from "../../store/services/TodoService";
 
 export const Filter: React.FC = () => {
+  const {data: todos} = useGetAllTodosQuery();
   const dispatch = useAppDispatch();
 
-  const todos = useAppSelector((state) => state.todos.todos);
-
-  const countCompleted = todos.filter((todo) => !todo.completed);
+  const countCompleted = todos?.filter((todo) => !todo.completed);
 
   const filterNames = ["All", "Active", "Completed"];
 
@@ -21,9 +21,9 @@ export const Filter: React.FC = () => {
 
   return (
     <FilterStyled>
-      {!!todos.length && (
+      {!!todos?.length && (
         <div className="filter">
-          <p className="filterCounter">{countCompleted.length} items left</p>
+          <p className="filterCounter">{countCompleted?.length} items left</p>
           {filterNames.map((name, index) => (
             <FilterButton key={index} name={name} isPressed={name === filter} />
           ))}

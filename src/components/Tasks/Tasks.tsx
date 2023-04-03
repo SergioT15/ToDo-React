@@ -1,21 +1,19 @@
 import React from "react";
 import { Task } from "./Task";
 
-import { useAppSelector } from "../../store/hooks";
-
-import { todoFiltered } from "../../store/todoSlice";
-
 // import styles from "./Tasks.module.css";
 import { TasksStyled } from "./Tasks.styled";
+import { useGetAllTodosQuery } from "../../store/services/TodoService";
+
 
 export const Tasks: React.FC = () => {
 
-  const todoFiltere = useAppSelector(todoFiltered);
+  const {data: todos} = useGetAllTodosQuery()
 
   return (
     <TasksStyled>
-      {todoFiltere?.length ? (
-        todoFiltere?.map((todo) => <Task key={todo.id} todo={todo} />)
+      {todos?.length ? (
+        todos?.map((todo) => <Task key={todo._id} todo={todo} />)
       ) : (
         <h3> Tasks not found</h3>
       )}

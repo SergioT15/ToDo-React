@@ -6,7 +6,7 @@ import { RootState } from "./store";
 
 export type TTodo = {
   text: string;
-  id: string;
+  _id: string;
   completed: boolean;
 };
 
@@ -24,44 +24,6 @@ export const todoSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    // Add new task
-    addTodo: (state, action: PayloadAction<string>) => {
-      if (!action.payload.trim()) {
-        return;
-      }
-      const newTask = {
-        text: action.payload,
-        id: uuidv4(),
-        completed: false,
-      };
-      state.todos.unshift(newTask);
-    },
-
-    // Change completed and uncompleted
-    changeStatus: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.map((todo) => {
-        if (action.payload !== todo.id) {
-          return todo;
-        }
-        return { ...todo, completed: !todo.completed };
-      });
-    },
-
-    //Delete task
-    deleteTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-    },
-
-    // Editing on doubleClick
-    editTodo: (state, action: PayloadAction<{ id: string; text: string }>) => {
-      // console.log(action.payload);
-      state.todos = state.todos.map((todo) => {
-        if (action.payload.id !== todo.id) {
-          return todo;
-        }
-        return { ...todo, text: action.payload.text };
-      });
-    },
 
     //Change all statuses completed and incomplete
     changeAllStatuses: (state) => {
@@ -98,10 +60,6 @@ export const todoFiltered = createSelector(
 );
 
 export const {
-  addTodo,
-  changeStatus,
-  deleteTodo,
-  editTodo,
   changeAllStatuses,
   deleteAllCompleted,
   filterTodo,
