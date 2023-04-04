@@ -49,16 +49,20 @@
 // };
 
 /////////////////////////////////////////////////
+
+import { ITodo } from "../types";
+
 import axiosInstance from "./index";
 
-export const getToDos = async (text: string) => {
-  const response = await axiosInstance.get("/", {});
-  return response;
+export const getToDos = async (filter: string) => {
+  const response = await axiosInstance.get<ITodo[]>("/", {});
+  console.log(response.data);
+  return response.data;
 };
 
 export const addToDo = async (text: string) => {
-  const response = await axiosInstance.post("/add", { data: {text} });
-  return response;
+  const response = await axiosInstance.post("/add", { data: { text } });
+  return response.data;
 };
 
 //updateToDo

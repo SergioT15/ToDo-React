@@ -16,10 +16,13 @@ export const Form: React.FC = (props) => {
   // const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // dispatch(addTodo(text));
     addToDo(text);
+    // const value = await addToDo(text);
+    // console.log(value);
     setText("");
   };
 

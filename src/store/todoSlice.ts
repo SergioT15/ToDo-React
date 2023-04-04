@@ -3,6 +3,7 @@ import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
 import { RootState } from "./store";
+import { ITodo } from "./types";
 
 export type TTodo = {
   text: string;
@@ -25,16 +26,17 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     // Add new task
-    addTodo: (state, action: PayloadAction<string>) => {
-      if (!action.payload.trim()) {
-        return;
-      }
-      const newTask = {
-        text: action.payload,
-        _id: uuidv4(),
-        completed: false,
-      };
-      state.todos.unshift(newTask);
+    addTodo: (state, action: PayloadAction<ITodo[]>) => {
+      state.todos = action.payload;
+      // if (!action.payload.trim()) {
+      //   return;
+      // }
+      // const newTask = {
+      //   text: action.payload,
+      //   _id: uuidv4(),
+      //   completed: false,
+      // };
+      // state.todos.unshift(newTask);
     },
 
     // Change completed and uncompleted
