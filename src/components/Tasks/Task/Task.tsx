@@ -1,13 +1,10 @@
 import React from "react";
 
-import { useAppDispatch } from "../../../store/hooks";
+// import { useAppDispatch } from "../../../store/hooks";
 
-import {
-  changeStatus,
-  editTodo,
-  deleteTodo,
-  TTodo,
-} from "../../../store/todoSlice";
+import {   TTodo } from "../../../store/todoSlice";
+
+import { deleteToDo, updateToDo, changeStatus } from "../../../store/api/api";
 
 import { useState } from "react";
 
@@ -23,7 +20,7 @@ export const Task: React.FC<ITodoState> = (props) => {
   const [newText, setNewText] = useState<string>(props.todo.text);
   const [isEditing, setEditing] = useState<string>("");
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewText(e.target.value);
@@ -36,7 +33,7 @@ export const Task: React.FC<ITodoState> = (props) => {
 
   const goOutOnEsc = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code !== "Escape") {
-      return setEditing(props.todo.id);
+      return setEditing(props.todo._id);
     } else {
       notNewText();
     }
@@ -50,7 +47,9 @@ export const Task: React.FC<ITodoState> = (props) => {
   const handleChangeOnClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newText.trim() !== "") {
-      dispatch(editTodo({ id: props.todo.id, text: newText }));
+      // dispatch(editTodo({ _id: props.todo._id, text: newText }));
+      updateToDo(props.todo._id, newText);
+      // createToDo({ _id: props.todo._id, text: newText })
       setNewText(newText);
       setEditing("");
     } else {
@@ -66,10 +65,10 @@ export const Task: React.FC<ITodoState> = (props) => {
           className="taskCheckbox"
           type="checkbox"
           checked={props.todo.completed}
-          onChange={() => dispatch(changeStatus(props.todo.id))}
+          onChange={() => changeStatus(props.todo._id, props.todo.completed)}
         />
       </div>
-      {isEditing === props.todo.id ? (
+      {isEditing === props.todo._id ? (
         <form className="taskBlockEdit" onSubmit={handleChangeOnClick}>
           <input
             className="taskInputEdit"
@@ -86,7 +85,7 @@ export const Task: React.FC<ITodoState> = (props) => {
         <p
           className="taskP"
           onDoubleClick={() => {
-            setEditing(props.todo.id);
+            setEditing(props.todo._id);
           }}
 
           // className={`${
@@ -98,7 +97,7 @@ export const Task: React.FC<ITodoState> = (props) => {
       )}
       <button
         className="taskDeleteButton"
-        onClick={() => dispatch(deleteTodo(props.todo.id))}
+        onClick={() => deleteToDo(props.todo._id)}
       >
         <img className="imgTask" src={img} alt="Ypss" />
       </button>{" "}

@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import React from "react";
 
-import { useAppDispatch } from "../../store/hooks";
+// import { useAppDispatch } from "../../store/hooks";
 
-import { addTodo } from "../../store/todoSlice";
+// import { addTodo } from "../../store/todoSlice";
+import { addToDo } from "../../store/api/api";
 
 // import styles from "./Form.module.css";
 import { FormStyled } from "./Form.styled";
@@ -12,12 +13,13 @@ import { FormStyled } from "./Form.styled";
 export const Form: React.FC = (props) => {
   const [text, setText] = useState("");
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(addTodo(text));
+    // dispatch(addTodo(text));
+    addToDo(text);
     setText("");
   };
 

@@ -15,7 +15,7 @@ export const Tasks: React.FC = () => {
   return (
     <TasksStyled>
       {todoFiltere?.length ? (
-        todoFiltere?.map((todo) => <Task key={todo.id} todo={todo} />)
+        todoFiltere?.map((todo) => <Task key={todo._id} todo={todo} />)
       ) : (
         <h3> Tasks not found</h3>
       )}
