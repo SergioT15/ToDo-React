@@ -1,6 +1,8 @@
-import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
-
-import { v4 as uuidv4 } from "uuid";
+import {
+  createSlice,
+  createSelector,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 import { RootState } from "./store";
 import { ITodo } from "./types";
@@ -26,27 +28,23 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     // Add new task
-    addTodo: (state, action: PayloadAction<ITodo[]>) => {
+    setTodo: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = action.payload;
-      // if (!action.payload.trim()) {
-      //   return;
-      // }
-      // const newTask = {
-      //   text: action.payload,
-      //   _id: uuidv4(),
-      //   completed: false,
-      // };
-      // state.todos.unshift(newTask);
     },
 
-    // Change completed and uncompleted
-    changeStatus: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.map((todo) => {
-        if (action.payload !== todo._id) {
-          return todo;
-        }
-        return { ...todo, completed: !todo.completed };
-      });
+    addTodo: (state, action: PayloadAction<ITodo>) => {
+      state.todos.push(action.payload);
+    },
+
+    // Editing on doubleClick
+    editTodo: (state, action: PayloadAction<{ _id: string; text: string }>) => {
+      const index = state.todos.findIndex(
+        (todo) => todo._id === action.payload._id
+      );
+      if (index === -1) {
+        return state;
+      }
+      state.todos[index].text = action.payload.text;
     },
 
     //Delete task
@@ -54,15 +52,18 @@ export const todoSlice = createSlice({
       state.todos = state.todos.filter((todo) => todo._id !== action.payload);
     },
 
-    // Editing on doubleClick
-    editTodo: (state, action: PayloadAction<{ _id: string; text: string }>) => {
-      // console.log(action.payload);
-      state.todos = state.todos.map((todo) => {
-        if (action.payload._id !== todo._id) {
-          return todo;
-        }
-        return { ...todo, text: action.payload.text };
-      });
+    // Change completed and uncompleted
+    changeStatus: (
+      state,
+      action: PayloadAction<{ _id: string; completed: boolean }>
+    ) => {
+      const index = state.todos.findIndex(
+        (todo) => todo._id === action.payload._id
+      );
+      if (index === -1) {
+        return state;
+      }
+      state.todos[index].completed = action.payload.completed;
     },
 
     //Change all statuses completed and incomplete
@@ -88,7 +89,6 @@ export const todoSlice = createSlice({
 export const todoFiltered = createSelector(
   ({ todos }: RootState) => todos,
   (todos) => {
-    // console.log(todos);
     if (todos.filter === "All") return todos.todos;
 
     if (todos.filter === "Active")
@@ -100,7 +100,7 @@ export const todoFiltered = createSelector(
 );
 
 export const {
-  addTodo,
+  setTodo,
   changeStatus,
   deleteTodo,
   editTodo,

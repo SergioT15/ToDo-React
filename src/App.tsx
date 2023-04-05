@@ -17,8 +17,8 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const todos = await getToDos("All")
-      console.log(todos);
-      dispatch(todoSlice.actions.addTodo(todos))
+            
+      dispatch(todoSlice.actions.setTodo(todos))
     })();
   }, []);
 

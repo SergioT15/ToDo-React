@@ -48,56 +48,46 @@
 //   return response;
 // };
 
-/////////////////////////////////////////////////
-
 import { ITodo } from "../types";
 
 import axiosInstance from "./index";
 
+//getToDos
 export const getToDos = async (filter: string) => {
   const response = await axiosInstance.get<ITodo[]>("/", {});
-  console.log(response.data);
   return response.data;
 };
 
+//addToDo
 export const addToDo = async (text: string) => {
-  const response = await axiosInstance.post("/add", { data: { text } });
+  const response = await axiosInstance.post<ITodo>("/add", { data: { text } });
+  console.log(13, response.data);
   return response.data;
 };
 
 //updateToDo
-export const updateToDo = async (_id: string, text: string) => {
-  // const response = await axiosInstance.patch('/patch', { _id, text })
-  const response = await axiosInstance.patch("/update", {
-    data: { _id, text },
+export const updateToDo = async (property: ITodo) => {
+  const response = await axiosInstance.patch<ITodo>(`/${property._id}`, {
+    text: property.text,
+  });
+  return response;
+};
+
+//changeStatus
+export const changeStatus = async (property: ITodo) => {
+  console.log(property.completed);
+  const response = await axiosInstance.patch<ITodo>(`/${property._id}`, {
+    completed: property.completed,
   });
   return response;
 };
 
 //deleteToDo
 export const deleteToDo = async (_id: string) => {
-  const response = await axiosInstance.delete("/patch", { data: { _id } });
-  return response;
-};
-
-//changeStatus
-export const changeStatus = async (_id: string, completed: boolean) => {
-  const response = await axiosInstance.patch("/completed", {
-    data: { _id, completed },
+  const response = await axiosInstance.delete<ITodo>("/delete", {
+    data: { _id },
   });
+  console.log(response.data);
   return response;
 };
 
-export const changeStatusAll = async (_id: string, completed: boolean) => {
-  const response = await axiosInstance.patch("/completedAll", {
-    data: { _id, completed },
-  });
-  return response;
-};
-
-export const filtereTodo = async (filter: string) => {
-  const response = await axiosInstance.patch("/filtered", {});
-  return response;
-};
-
-///////////////////////////////////////////////////////////////////////////////////
