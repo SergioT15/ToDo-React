@@ -2,12 +2,12 @@ import React from "react";
 
 import { todoSlice, TTodo } from "../../../store/todoSlice";
 
-import { deleteToDo, updateToDo, changeStatus } from "../../../store/api/api";
+import { deleteToDo, updateToDo } from "../../../store/api/api";
 
 import { useState } from "react";
 
 import img from "../../../assets/trash.png";
-// import styles from "./Task.module.css";
+
 import { TaskStyled } from "./Task.styled";
 import { useAppDispatch } from "../../../store/hooks";
 
@@ -49,12 +49,16 @@ export const Task: React.FC<ITodoState> = (props) => {
       await updateToDo({
         _id: props.todo._id,
         text: newText,
-        completed: false,
+        completed: props.todo.completed,
         __v: 0,
-        filter: "All",
+        filter: "",
       });
       dispatch(
-        todoSlice.actions.editTodo({ _id: props.todo._id, text: newText })
+        todoSlice.actions.udateTodo({
+          _id: props.todo._id,
+          text: newText,
+          completed: props.todo.completed,
+        })
       );
       setNewText(newText);
       setEditing("");
@@ -64,23 +68,24 @@ export const Task: React.FC<ITodoState> = (props) => {
     setEditing("");
   };
 
-  const dele = async () => {
+  const delet = async () => {
     await deleteToDo(props.todo._id);
     dispatch(todoSlice.actions.deleteTodo(props.todo._id));
   };
 
   const changeStatuss = async () => {
-    await changeStatus({
+    await updateToDo({
       _id: props.todo._id,
-      completed: props.todo.completed,
-      text: "",
+      text: props.todo.text,
+      completed: !props.todo.completed,
       __v: 0,
-      filter: "All",
+      filter: "",
     });
     dispatch(
-      todoSlice.actions.changeStatus({
+      todoSlice.actions.udateTodo({
         _id: props.todo._id,
-        completed: props.todo.completed,
+        text: props.todo.text,
+        completed: !props.todo.completed,
       })
     );
   };
@@ -118,7 +123,7 @@ export const Task: React.FC<ITodoState> = (props) => {
           {props.todo.text}
         </p>
       )}
-      <button className="taskDeleteButton" onClick={dele}>
+      <button className="taskDeleteButton" onClick={delet}>
         <img className="imgTask" src={img} alt="Ypss" />
       </button>{" "}
     </TaskStyled>

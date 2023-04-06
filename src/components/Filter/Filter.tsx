@@ -4,9 +4,14 @@ import { FilterStyled } from "./Filter.styled";
 
 import { FilterButton } from "./FilterButton/FilterButton";
 
-import { changeAllStatuses, deleteAllCompleted } from "../../store/todoSlice";
+import {
+  deleteAllCompleted,
+  changeAllCompleted,
+} from "../../store/todoSlice";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+
+import { completedAllToDo, deleteALlToDo } from "../../store/api/api";
 
 export const Filter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +24,16 @@ export const Filter: React.FC = () => {
 
   const filter = useAppSelector((state) => state.todos.filter);
 
+  const deleteAllComple = async () => {
+    const todos = await deleteALlToDo();
+    dispatch(deleteAllCompleted(todos));
+  };
+
+  const completeAllComple = async () => {
+    const todos = await completedAllToDo();
+    dispatch(changeAllCompleted(todos));
+  };
+
   return (
     <FilterStyled>
       {!!todos.length && (
@@ -27,8 +42,8 @@ export const Filter: React.FC = () => {
           {filterNames.map((name, index) => (
             <FilterButton key={index} name={name} isPressed={name === filter} />
           ))}
-          <button onClick={() => dispatch(changeAllStatuses())}>Check</button>
-          <button onClick={() => dispatch(deleteAllCompleted())}>Clear</button>
+          <button onClick={completeAllComple}>Check</button>
+          <button onClick={deleteAllComple}>Clear</button>
         </div>
       )}
     </FilterStyled>

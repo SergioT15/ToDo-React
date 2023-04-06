@@ -61,7 +61,6 @@ export const getToDos = async (filter: string) => {
 //addToDo
 export const addToDo = async (text: string) => {
   const response = await axiosInstance.post<ITodo>("/add", { data: { text } });
-  console.log(13, response.data);
   return response.data;
 };
 
@@ -69,14 +68,6 @@ export const addToDo = async (text: string) => {
 export const updateToDo = async (property: ITodo) => {
   const response = await axiosInstance.patch<ITodo>(`/${property._id}`, {
     text: property.text,
-  });
-  return response;
-};
-
-//changeStatus
-export const changeStatus = async (property: ITodo) => {
-  console.log(property.completed);
-  const response = await axiosInstance.patch<ITodo>(`/${property._id}`, {
     completed: property.completed,
   });
   return response;
@@ -87,7 +78,24 @@ export const deleteToDo = async (_id: string) => {
   const response = await axiosInstance.delete<ITodo>("/delete", {
     data: { _id },
   });
-  console.log(response.data);
   return response;
 };
 
+//deleteAllToDo
+export const deleteALlToDo = async () => {
+  const response = await axiosInstance.delete<ITodo[]>("/deleteAll");
+  return response.data;
+};
+
+// export const completedAllToDo = async (completedAll: boolean) => {
+//   const response = await axiosInstance.patch<ITodo[]>("/completedAll", {
+//     completedAll,
+//   });
+//   return response;
+// };
+
+export const completedAllToDo = async () => {
+  const response = await axiosInstance.patch<ITodo[]>("/completedAll");
+  console.log("asdadawdadwd", response.data);
+  return response.data;
+};
