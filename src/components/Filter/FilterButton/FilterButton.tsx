@@ -1,13 +1,17 @@
 import React from "react";
 
-// import styles from "./FilterButton.module.css";
 import { FilterButtonStyled } from "./FilterButton.styled";
 
 import { useAppDispatch } from "../../../store/hooks";
 
 import { filterTodo } from "../../../store/todoSlice";
 
-export const FilterButton = (props) => {
+interface IProps {
+  name: string;
+  isPressed: boolean;
+}
+
+export const FilterButton: React.FC<IProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const changeName = () => {
@@ -15,11 +19,11 @@ export const FilterButton = (props) => {
   };
 
   return (
-    <FilterButtonStyled   isPressedTodo={props.isPressed} >
+    <FilterButtonStyled isPressedTodo={props.isPressed}>
       <button
         type="button"
         onClick={changeName}
-        className="filterButtonGreen"
+        className="filter-button--green"
       >
         {props.name}
       </button>

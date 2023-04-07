@@ -15,7 +15,7 @@ export const TaskStyled = styled.div<TProps>`
   background-color: rgb(47, 79, 79);
   border-radius: 10px;
 
-  .taskP {
+  .task-text--checked {
     flex-grow: 1;
     padding: 5px 0px;
 
@@ -30,17 +30,16 @@ export const TaskStyled = styled.div<TProps>`
     color: rgb(235, 130, 148);
   }
 
-  .taskCheckbox {
+  .task-input__checkbox {
     height: 20px;
     width: 20px;
   }
 
-  .taskCheckboxDiv {
+  .task-checkbox {
     margin-right: 8px;
   }
 
-  .taskDeleteButton {
-    /* background: url(/assets/trash.png) 0 0 /100% auto no-repeat; */
+  .task-button__delete {
     background-color: transparent;
     height: 30px;
     width: 30px;
@@ -51,7 +50,7 @@ export const TaskStyled = styled.div<TProps>`
     position: relative;
   }
 
-  .taskInputEdit {
+  .task-input--edit {
     height: 30px;
     flex-grow: 1;
     width: 290px;
@@ -61,7 +60,7 @@ export const TaskStyled = styled.div<TProps>`
     background: #6c8c97;
   }
 
-  .imgTask {
+  .tast-img--trash {
     position: absolute;
     top: 0px;
     left: 0px;

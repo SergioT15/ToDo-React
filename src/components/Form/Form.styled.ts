@@ -4,7 +4,7 @@ export const FormStyled = styled.form`
   display: flex;
   flex-grow: 1;
 
-  .input {
+  .form-input {
     padding: 0 15px;
     display: flex;
     flex-grow: 1;
@@ -17,7 +17,7 @@ export const FormStyled = styled.form`
     border: none;
   }
 
-  .buttonForm {
+  .form-button_add {
     height: 40px;
     margin-left: 7px;
   }

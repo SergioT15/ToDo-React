@@ -23,6 +23,7 @@ export const todoSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
+    //AllTodos changeAllCompleted, deleteAllCompleted
     setTodo: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = action.payload;
     },
@@ -52,36 +53,12 @@ export const todoSlice = createSlice({
       state.todos[index].completed = action.payload.completed;
     },
 
-    // changeAllStatuses: (state) => {
-    //   const isFalseTodo = state.todos.some((item) => !item.completed);
-    //   state.todos = state.todos.map((todo) => {
-    //     return { ...todo, completed: isFalseTodo };
-    //   });
-    // },
-
-    // changeAllCompleted: (
-    // state,
-    //   action: PayloadAction<{ completed: boolean }>
-    // ) => {
-
-    // state.todos.forEach((todo) => (todo.completed = action.payload));
-    // },
-
-    changeAllCompleted: (state, action: PayloadAction<ITodo[]>) => {
-      // const isFalseTodo = state.todos.some((item) => !item.completed);
-      // state.todos = state.todos.map((todo) => {
-      //   return { ...todo, completed: isFalseTodo };
-      // });
-      state.todos = action.payload;
+    changeAllStatuses: (state) => {
+      const isFalseTodo = state.todos.some((item) => !item.completed);
+      state.todos = state.todos.map((todo) => {
+        return { ...todo, completed: isFalseTodo };
+      });
     },
-
-    deleteAllCompleted: (state, action: PayloadAction<ITodo[]>) => {
-      state.todos = action.payload;
-    },
-
-    // changeAllCompleted: (state, action: PayloadAction<ITodo[]>) => {
-    //   state.todos = action.payload;
-    // },
 
     filterTodo: (state, action: PayloadAction<string>) => {
       state.filter = action.payload;
@@ -102,14 +79,7 @@ export const todoFiltered = createSelector(
   }
 );
 
-export const {
-  setTodo,
-  deleteTodo,
-  udateTodo,
-  // changeAllStatuses,
-  changeAllCompleted,
-  deleteAllCompleted,
-  filterTodo,
-} = todoSlice.actions;
+export const { setTodo, deleteTodo, udateTodo, changeAllStatuses, filterTodo } =
+  todoSlice.actions;
 
 export default todoSlice.reducer;

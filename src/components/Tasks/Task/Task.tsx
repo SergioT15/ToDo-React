@@ -2,7 +2,7 @@ import React from "react";
 
 import { todoSlice, TTodo } from "../../../store/todoSlice";
 
-import { deleteToDo, updateToDo } from "../../../store/api/api";
+import { deleteToDo, updateToDo } from "../../../api/todoApi";
 
 import { useState } from "react";
 
@@ -46,20 +46,23 @@ export const Task: React.FC<ITodoState> = (props) => {
   const handleChangeOnClick = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newText.trim() !== "") {
-      await updateToDo({
-        _id: props.todo._id,
-        text: newText,
-        completed: props.todo.completed,
-        __v: 0,
-        filter: "",
-      });
-      dispatch(
-        todoSlice.actions.udateTodo({
+      try {
+        await updateToDo({
           _id: props.todo._id,
           text: newText,
           completed: props.todo.completed,
-        })
-      );
+        });
+        dispatch(
+          todoSlice.actions.udateTodo({
+            _id: props.todo._id,
+            text: newText,
+            completed: props.todo.completed,
+          })
+        );
+      } catch (err) {
+        console.log(`Error! Unable to update todo! ${err}`);
+      }
+
       setNewText(newText);
       setEditing("");
     } else {
@@ -73,37 +76,39 @@ export const Task: React.FC<ITodoState> = (props) => {
     dispatch(todoSlice.actions.deleteTodo(props.todo._id));
   };
 
-  const changeStatuss = async () => {
-    await updateToDo({
-      _id: props.todo._id,
-      text: props.todo.text,
-      completed: !props.todo.completed,
-      __v: 0,
-      filter: "",
-    });
-    dispatch(
-      todoSlice.actions.udateTodo({
+  const changeStatus = async () => {
+    try {
+      await updateToDo({
         _id: props.todo._id,
         text: props.todo.text,
         completed: !props.todo.completed,
-      })
-    );
+      });
+      dispatch(
+        todoSlice.actions.udateTodo({
+          _id: props.todo._id,
+          text: props.todo.text,
+          completed: !props.todo.completed,
+        })
+      );
+    } catch (err) {
+      return console.log(`Error! Unable to completed todo! ${err}`);
+    }
   };
 
   return (
     <TaskStyled isCompletedTodo={props.todo.completed}>
-      <div className="taskCheckboxDiv">
+      <div className="task-checkbox">
         <input
-          className="taskCheckbox"
+          className="task-input__checkbox"
           type="checkbox"
           checked={props.todo.completed}
-          onChange={changeStatuss}
+          onChange={changeStatus}
         />
       </div>
       {isEditing === props.todo._id ? (
-        <form className="taskBlockEdit" onSubmit={handleChangeOnClick}>
+        <form onSubmit={handleChangeOnClick}>
           <input
-            className="taskInputEdit"
+            className="task-input--edit"
             placeholder="edit todo"
             value={newText}
             onChange={handleChange}
@@ -115,7 +120,7 @@ export const Task: React.FC<ITodoState> = (props) => {
         </form>
       ) : (
         <p
-          className="taskP"
+          className="task-text--checked"
           onDoubleClick={() => {
             setEditing(props.todo._id);
           }}
@@ -123,8 +128,8 @@ export const Task: React.FC<ITodoState> = (props) => {
           {props.todo.text}
         </p>
       )}
-      <button className="taskDeleteButton" onClick={delet}>
-        <img className="imgTask" src={img} alt="Ypss" />
+      <button className="task-button__delete" onClick={delet}>
+        <img className="tast-img--trash" src={img} alt="Ypss" />
       </button>{" "}
     </TaskStyled>
   );

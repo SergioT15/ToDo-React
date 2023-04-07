@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
 export const FilterStyled = styled.div`
-  .filter {
+  .filter-container {
     display: flex;
     justify-content: space-between;
   }
 
-  .filterCounter {
+  .filter-button {
     display: flex;
     align-items: center;
   }
 
   @media (max-width: 400px) {
-    .filterCounter {
+    .filter-button {
       font-size: 12px;
     }
   }

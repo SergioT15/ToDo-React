@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import React from "react";
 
-import { addToDo } from "../../store/api/api";
+import { addToDo } from "../../api/todoApi";
 
 import { FormStyled } from "./Form.styled";
 import { useAppDispatch } from "../../store/hooks";
@@ -10,13 +10,18 @@ import { todoSlice } from "../../store/todoSlice";
 
 export const Form: React.FC = (props) => {
   const [text, setText] = useState("");
-  
- const dispatch = useAppDispatch()
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newTodo = await addToDo(text);
-    dispatch(todoSlice.actions.addTodo(newTodo))
+
+    try {
+      const newTodo = await addToDo(text);
+      dispatch(todoSlice.actions.addTodo(newTodo));
+    } catch (err) {
+      console.log(`Error! Unable to added todo! ${err}`);
+    }
     setText("");
   };
 
@@ -27,13 +32,13 @@ export const Form: React.FC = (props) => {
   return (
     <FormStyled onSubmit={handleSubmit}>
       <input
-        className="input"
+        className="form-input"
         type="text"
         placeholder="Add new todo"
         value={text}
         onChange={handleChange}
       />
-      <button className="buttonForm">Add</button>
+      <button className="form-button_add">Add</button>
     </FormStyled>
   );
 };
