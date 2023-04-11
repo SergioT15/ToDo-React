@@ -9,14 +9,20 @@ export type TTodo = {
   completed: boolean;
 };
 
+type TPage = {
+  page: number;
+};
+
 type TTodoState = {
   todos: TTodo[];
   filter?: string;
+  page: TPage[];
 };
 
 const initialState: TTodoState = {
   todos: [],
   filter: "All",
+  page: [],
 };
 
 export const todoSlice = createSlice({
@@ -26,6 +32,10 @@ export const todoSlice = createSlice({
     //AllTodos changeAllCompleted, deleteAllCompleted
     setTodo: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = action.payload;
+    },
+
+    pageNumbersTodo: (state, action: PayloadAction<TPage[]>) => {
+      state.page = action.payload;
     },
 
     // Add new task

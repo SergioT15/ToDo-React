@@ -4,7 +4,17 @@ import axiosInstance from "./index";
 
 //getToDos
 export const getToDos = async (filter: string) => {
-  const response = await axiosInstance.get<ITodo[]>("/");
+  const response = await axiosInstance.get<{ todos: ITodo[]; count: number }>(
+    "/0"
+  );
+  return response.data;
+};
+
+//updateToDo
+export const paginateToDos = async (page: number) => {
+  const response = await axiosInstance.get<{ todos: ITodo[]; count: number }>(
+    "/:page"
+  );
   return response.data;
 };
 
