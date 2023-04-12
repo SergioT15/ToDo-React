@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Form } from "./components/Form";
 import { Title } from "./components/Title";
@@ -15,19 +15,22 @@ import { useAppSelector } from "./store/hooks";
 const App = () => {
   const dispatch = useDispatch();
 
-  const currentPage = useAppSelector((state) => state.todos.currentPage)
+  const currentPage = useAppSelector((state) => state.todos.currentPage);
+  console.log("currentPage", currentPage);
+
+  const filter = useAppSelector((state) => state.todos.filter);
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await getToDos(currentPage);
+        const response = await getToDos(currentPage, filter);
         dispatch(setTodo(response.todos));
-        dispatch(setPages(response.count));
+        dispatch(setPages(response.pages));
       } catch (err) {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, [currentPage]);
+  }, [currentPage, filter]);
 
   return (
     <AppStyled>
@@ -35,10 +38,8 @@ const App = () => {
         <Title />
         <Form />
         <Tasks />
+        <Pages />
         <Filter />
-        <Pages
-        //  paginate={paginate} pageNumbers={pageNumbers}
-        />
       </div>
     </AppStyled>
   );

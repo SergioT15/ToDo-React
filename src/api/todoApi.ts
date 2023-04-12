@@ -3,14 +3,14 @@ import { ITodo } from "../store/types";
 import axiosInstance from "./index";
 
 //getToDos
-export const getToDos = async (pageNumber: number) => {
-  const response = await axiosInstance.get<{ todos: ITodo[]; count: number }>(
-    `/${pageNumber}`
-  );
+export const getToDos = async (currentPage: number, currentFilter: string) => {
+  const response = await axiosInstance.get<{
+    todos: ITodo[];
+    count: number;
+    pages: number[];
+  }>(`/${currentPage}?filter=${currentFilter}`);
   return response.data;
 };
-
-
 
 //addToDo
 export const addToDo = async (text: string) => {

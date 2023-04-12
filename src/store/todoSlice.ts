@@ -1,8 +1,6 @@
-import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { RootState } from "./store";
 import { ITodo } from "./types";
-import { act } from "react-dom/test-utils";
 
 export type TTodo = {
   text: string;
@@ -12,7 +10,7 @@ export type TTodo = {
 
 type TTodoState = {
   todos: TTodo[];
-  filter?: string;
+  filter: string;
   pages: number[];
   currentPage: number;
 };
@@ -31,12 +29,14 @@ export const todoSlice = createSlice({
     //AllTodos changeAllCompleted, deleteAllCompleted
     setTodo: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = action.payload;
+      console.log("action.payload", action.payload);
     },
-    setPages: (state, action: PayloadAction<number>) => {
-      const pagesLenght = Math.ceil(action.payload / 5);
-      state.pages = Array.from({length: pagesLenght}, (_, index) => index);
+
+    setPages: (state, action: PayloadAction<number[]>) => {
+      state.pages = action.payload;
     },
-    setCurrentPage: (state, action: PayloadAction<number>) => {      
+
+    setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
 
@@ -78,20 +78,27 @@ export const todoSlice = createSlice({
   },
 });
 
-export const todoFiltered = createSelector(
-  ({ todos }: RootState) => todos,
-  (todos) => {
-    if (todos.filter === "All") return todos.todos;
+// export const todoFiltered = createSelector(
+//   ({ todos }: RootState) => todos,
+//   (todos) => {
+//     if (todos.filter === "All") return todos.todos;
 
-    if (todos.filter === "Active")
-      return todos.todos.filter((todo) => !todo.completed);
+//     if (todos.filter === "Active")
+//       return todos.todos.filter((todo) => !todo.completed);
 
-    if (todos.filter === "Completed")
-      return todos.todos.filter((todo) => todo.completed);
-  }
-);
+//     if (todos.filter === "Completed")
+//       return todos.todos.filter((todo) => todo.completed);
+//   }
+// );
 
-export const { setTodo, setPages, setCurrentPage, deleteTodo, udateTodo, changeAllStatuses, filterTodo } =
-  todoSlice.actions;
+export const {
+  setTodo,
+  setPages,
+  setCurrentPage,
+  deleteTodo,
+  udateTodo,
+  changeAllStatuses,
+  filterTodo,
+} = todoSlice.actions;
 
 export default todoSlice.reducer;

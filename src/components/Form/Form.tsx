@@ -18,6 +18,7 @@ export const Form: React.FC = (props) => {
 
     try {
       const newTodo = await addToDo(text);
+      console.log(newTodo);
       dispatch(todoSlice.actions.addTodo(newTodo));
     } catch (err) {
       console.log(`Error! Unable to added todo! ${err}`);

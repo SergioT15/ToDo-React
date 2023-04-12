@@ -12,6 +12,8 @@ export const Filter: React.FC = () => {
 
   const todos = useAppSelector((state) => state.todos.todos);
   const filter = useAppSelector((state) => state.todos.filter);
+  console.log("filter", filter);
+  
 
   const countCompleted = todos.filter((todo) => !todo.completed);
   const filterNames = ["All", "Active", "Completed"];
