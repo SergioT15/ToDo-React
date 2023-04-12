@@ -9,42 +9,25 @@ import { Pages } from "./components/Pages";
 import { AppStyled } from "./App.styled";
 import { getToDos } from "./api/todoApi";
 import { useDispatch } from "react-redux";
-import { todoSlice } from "./store/todoSlice";
+import { setPages, setTodo } from "./store/todoSlice";
+import { useAppSelector } from "./store/hooks";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
-  // const [currentPage, setCurrentPage] = useState(3);
-  // const itemPerPage = 5;
-  // const indexOfLastTask = currentPage * itemPerPage;
-  // const indexOfFirstTask = indexOfLastTask - itemPerPage;
-  // const currentTask = arr.slice(indexOfFirstTask, indexOfLastTask);
-
-  // console.log("currentTask =", currentTask);
-
-  // const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
-
-  // const pageNumbers = [];
-  // const totaItems = arr.length;
-  // console.log("totaItems =", totaItems);
-
-  // for (let i = 1; i <= Math.ceil(totaItems / itemPerPage); i++) {
-  //   pageNumbers.push(i);
-  // }
-  // console.log("pageNumbers =", pageNumbers);
+  const currentPage = useAppSelector((state) => state.todos.currentPage)
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await getToDos("All");
-        dispatch(todoSlice.actions.setTodo(response.todos));
+        const response = await getToDos(currentPage);
+        dispatch(setTodo(response.todos));
+        dispatch(setPages(response.count));
       } catch (err) {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, []);
+  }, [currentPage]);
 
   return (
     <AppStyled>

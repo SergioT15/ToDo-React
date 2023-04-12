@@ -2,6 +2,7 @@ import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "./store";
 import { ITodo } from "./types";
+import { act } from "react-dom/test-utils";
 
 export type TTodo = {
   text: string;
@@ -9,20 +10,18 @@ export type TTodo = {
   completed: boolean;
 };
 
-type TPage = {
-  page: number;
-};
-
 type TTodoState = {
   todos: TTodo[];
   filter?: string;
-  page: TPage[];
+  pages: number[];
+  currentPage: number;
 };
 
 const initialState: TTodoState = {
   todos: [],
   filter: "All",
-  page: [],
+  pages: [],
+  currentPage: 0,
 };
 
 export const todoSlice = createSlice({
@@ -33,9 +32,12 @@ export const todoSlice = createSlice({
     setTodo: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = action.payload;
     },
-
-    pageNumbersTodo: (state, action: PayloadAction<TPage[]>) => {
-      state.page = action.payload;
+    setPages: (state, action: PayloadAction<number>) => {
+      const pagesLenght = Math.ceil(action.payload / 5);
+      state.pages = Array.from({length: pagesLenght}, (_, index) => index);
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {      
+      state.currentPage = action.payload;
     },
 
     // Add new task
@@ -89,7 +91,7 @@ export const todoFiltered = createSelector(
   }
 );
 
-export const { setTodo, deleteTodo, udateTodo, changeAllStatuses, filterTodo } =
+export const { setTodo, setPages, setCurrentPage, deleteTodo, udateTodo, changeAllStatuses, filterTodo } =
   todoSlice.actions;
 
 export default todoSlice.reducer;

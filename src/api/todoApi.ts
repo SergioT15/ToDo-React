@@ -3,20 +3,14 @@ import { ITodo } from "../store/types";
 import axiosInstance from "./index";
 
 //getToDos
-export const getToDos = async (filter: string) => {
+export const getToDos = async (pageNumber: number) => {
   const response = await axiosInstance.get<{ todos: ITodo[]; count: number }>(
-    "/0"
+    `/${pageNumber}`
   );
   return response.data;
 };
 
-//updateToDo
-export const paginateToDos = async (page: number) => {
-  const response = await axiosInstance.get<{ todos: ITodo[]; count: number }>(
-    "/:page"
-  );
-  return response.data;
-};
+
 
 //addToDo
 export const addToDo = async (text: string) => {
