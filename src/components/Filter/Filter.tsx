@@ -9,12 +9,8 @@ import { completedAllToDo, deleteALlToDo } from "../../api/todoApi";
 
 export const Filter: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const todos = useAppSelector((state) => state.todos.todos);
   const filter = useAppSelector((state) => state.todos.filter);
-  console.log("filter", filter);
-  
-
   const countCompleted = todos.filter((todo) => !todo.completed);
   const filterNames = ["All", "Active", "Completed"];
 
@@ -28,7 +24,6 @@ export const Filter: React.FC = () => {
   };
 
   const isFalseTodo = todos.some((item) => !item.completed);
-
   const completeAllComple = async () => {
     try {
       const todos = await completedAllToDo(isFalseTodo);
@@ -40,16 +35,14 @@ export const Filter: React.FC = () => {
 
   return (
     <FilterStyled>
-      {!!todos.length && (
-        <div className="filter-container">
-          <p className="filter-button">{countCompleted.length} items left</p>
-          {filterNames.map((name, index) => (
-            <FilterButton key={index} name={name} isPressed={name === filter} />
-          ))}
-          <button onClick={completeAllComple}>Check</button>
-          <button onClick={deleteAllComple}>Clear</button>
-        </div>
-      )}
+      <div className="filter-container">
+        <p className="filter-button">{countCompleted.length} items left</p>
+        {filterNames.map((name, index) => (
+          <FilterButton key={index} name={name} isPressed={name === filter} />
+        ))}
+        <button onClick={completeAllComple}>Check</button>
+        <button onClick={deleteAllComple}>Clear</button>
+      </div>
     </FilterStyled>
   );
 };

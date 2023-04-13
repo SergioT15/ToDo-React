@@ -29,7 +29,6 @@ export const todoSlice = createSlice({
     //AllTodos changeAllCompleted, deleteAllCompleted
     setTodo: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = action.payload;
-      console.log("action.payload", action.payload);
     },
 
     setPages: (state, action: PayloadAction<number[]>) => {
@@ -77,19 +76,6 @@ export const todoSlice = createSlice({
     },
   },
 });
-
-// export const todoFiltered = createSelector(
-//   ({ todos }: RootState) => todos,
-//   (todos) => {
-//     if (todos.filter === "All") return todos.todos;
-
-//     if (todos.filter === "Active")
-//       return todos.todos.filter((todo) => !todo.completed);
-
-//     if (todos.filter === "Completed")
-//       return todos.todos.filter((todo) => todo.completed);
-//   }
-// );
 
 export const {
   setTodo,

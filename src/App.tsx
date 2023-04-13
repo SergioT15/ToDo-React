@@ -14,11 +14,10 @@ import { useAppSelector } from "./store/hooks";
 
 const App = () => {
   const dispatch = useDispatch();
-
   const currentPage = useAppSelector((state) => state.todos.currentPage);
-  console.log("currentPage", currentPage);
-
   const filter = useAppSelector((state) => state.todos.filter);
+  const todos = useAppSelector((state) => state.todos.todos);
+  const todosLength = todos.length;
 
   useEffect(() => {
     (async () => {
@@ -30,7 +29,7 @@ const App = () => {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, [currentPage, filter]);
+  }, [currentPage, filter, todosLength]);
 
   return (
     <AppStyled>

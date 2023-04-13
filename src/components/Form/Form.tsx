@@ -10,15 +10,12 @@ import { todoSlice } from "../../store/todoSlice";
 
 export const Form: React.FC = (props) => {
   const [text, setText] = useState("");
-
   const dispatch = useAppDispatch();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const newTodo = await addToDo(text);
-      console.log(newTodo);
       dispatch(todoSlice.actions.addTodo(newTodo));
     } catch (err) {
       console.log(`Error! Unable to added todo! ${err}`);

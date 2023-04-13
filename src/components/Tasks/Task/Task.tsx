@@ -1,15 +1,11 @@
 import React from "react";
 
 import { todoSlice, TTodo } from "../../../store/todoSlice";
-
 import { deleteToDo, updateToDo } from "../../../api/todoApi";
-
 import { useState } from "react";
-
-import img from "../../../assets/trash.png";
-
 import { TaskStyled } from "./Task.styled";
 import { useAppDispatch } from "../../../store/hooks";
+import img from "../../../assets/trash.png";
 
 interface ITodoState {
   todo: TTodo;
