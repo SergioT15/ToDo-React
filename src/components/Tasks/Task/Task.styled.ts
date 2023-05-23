@@ -69,3 +69,4 @@ export const TaskStyled = styled.div<TProps>`
     height: 25px;
   }
 `;
+

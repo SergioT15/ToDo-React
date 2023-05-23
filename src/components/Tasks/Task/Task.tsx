@@ -1,6 +1,6 @@
 import React from "react";
 
-import { todoSlice, TTodo } from "../../../store/todoSlice";
+import { todoSlice, TTodo, setAciveTodos } from "../../../store/todoSlice";
 import { deleteToDo, updateToDo } from "../../../api/todoApi";
 import { useState } from "react";
 import { TaskStyled } from "./Task.styled";
@@ -13,7 +13,7 @@ interface ITodoState {
 
 export const Task: React.FC<ITodoState> = (props) => {
   const [newText, setNewText] = useState<string>(props.todo.text);
-  const [isEditing, setEditing] = useState<string>("");
+  const [isEditing, setEditing] = useState<number>(NaN);
 
   const dispatch = useAppDispatch();
 
@@ -23,69 +23,58 @@ export const Task: React.FC<ITodoState> = (props) => {
 
   const notNewText = () => {
     setNewText(props.todo.text);
-    setEditing("");
+    setEditing(NaN);
   };
 
   const goOutOnEsc = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code !== "Escape") {
-      return setEditing(props.todo._id);
+      return setEditing(props.todo.id);
     } else {
       notNewText();
     }
   };
 
-  // const onBlur = () => {
-  //   setNewText("");
-  //   setEditing("");
-  // };
+  const onBlur = () => {
+    setNewText(props.todo.text);
+    setEditing(NaN);
+  };
 
   const handleChangeOnClick = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newText.trim() !== "") {
       try {
-        await updateToDo({
-          _id: props.todo._id,
+        const updateText = await updateToDo({
+          id: props.todo.id,
           text: newText,
           completed: props.todo.completed,
         });
-        dispatch(
-          todoSlice.actions.udateTodo({
-            _id: props.todo._id,
-            text: newText,
-            completed: props.todo.completed,
-          })
-        );
+        dispatch(todoSlice.actions.udateTodo(updateText.new_todo));
+        dispatch(setAciveTodos(updateText.count_active_todos));
       } catch (err) {
         console.log(`Error! Unable to update todo! ${err}`);
       }
-
       setNewText(newText);
-      setEditing("");
+      setEditing(NaN);
     } else {
       setNewText(props.todo.text);
     }
-    setEditing("");
+    setEditing(NaN);
   };
 
   const delet = async () => {
-    await deleteToDo(props.todo._id);
-    dispatch(todoSlice.actions.deleteTodo(props.todo._id));
+    await deleteToDo(props.todo.id);
+    dispatch(todoSlice.actions.deleteTodo(props.todo.id));
   };
 
   const changeStatus = async () => {
     try {
-      await updateToDo({
-        _id: props.todo._id,
+      const status = await updateToDo({
+        id: props.todo.id,
         text: props.todo.text,
         completed: !props.todo.completed,
       });
-      dispatch(
-        todoSlice.actions.udateTodo({
-          _id: props.todo._id,
-          text: props.todo.text,
-          completed: !props.todo.completed,
-        })
-      );
+      dispatch(todoSlice.actions.udateTodo(status.new_todo));
+      dispatch(setAciveTodos(status.count_active_todos));
     } catch (err) {
       return console.log(`Error! Unable to completed todo! ${err}`);
     }
@@ -101,7 +90,7 @@ export const Task: React.FC<ITodoState> = (props) => {
           onChange={changeStatus}
         />
       </div>
-      {isEditing === props.todo._id ? (
+      {isEditing === props.todo.id ? (
         <form onSubmit={handleChangeOnClick}>
           <input
             className="task-input--edit"
@@ -111,14 +100,14 @@ export const Task: React.FC<ITodoState> = (props) => {
             type="text"
             onKeyUp={goOutOnEsc}
             autoFocus
-            // onBlur={onBlur}
+            onBlur={onBlur}
           />
         </form>
       ) : (
         <p
           className="task-text--checked"
           onDoubleClick={() => {
-            setEditing(props.todo._id);
+            setEditing(props.todo.id);
           }}
         >
           {props.todo.text}

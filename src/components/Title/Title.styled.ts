@@ -9,3 +9,4 @@ export const TitleStyled = styled.h1`
   margin-top: 100px;
   font-weight: 600;
 `;
+

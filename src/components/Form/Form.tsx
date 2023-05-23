@@ -3,7 +3,6 @@ import { useState } from "react";
 import React from "react";
 
 import { addToDo } from "../../api/todoApi";
-
 import { FormStyled } from "./Form.styled";
 import { useAppDispatch } from "../../store/hooks";
 import { todoSlice } from "../../store/todoSlice";
@@ -11,6 +10,7 @@ import { todoSlice } from "../../store/todoSlice";
 export const Form: React.FC = (props) => {
   const [text, setText] = useState("");
   const dispatch = useAppDispatch();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

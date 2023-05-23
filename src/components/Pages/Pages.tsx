@@ -12,10 +12,8 @@ const Pages: React.FC = () => {
     dispatch(setCurrentPage(page));
   };
 
-
-
   return (
-    <PagesStyled >
+    <PagesStyled>
       {pages.length > 1 && (
         <button
           className="page-button"

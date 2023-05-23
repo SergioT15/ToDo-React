@@ -10,8 +10,10 @@ import { completedAllToDo, deleteALlToDo } from "../../api/todoApi";
 export const Filter: React.FC = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state) => state.todos.todos);
+  const countActiveTodo = useAppSelector((state) => state.todos.AciveTodos);
+
   const filter = useAppSelector((state) => state.todos.filter);
-  const countCompleted = todos.filter((todo) => !todo.completed);
+
   const filterNames = ["All", "Active", "Completed"];
 
   const deleteAllComple = async () => {
@@ -36,7 +38,7 @@ export const Filter: React.FC = () => {
   return (
     <FilterStyled>
       <div className="filter-container">
-        <p className="filter-button">{countCompleted.length} items left</p>
+        <p className="filter-button">{countActiveTodo} items left</p>
         {filterNames.map((name, index) => (
           <FilterButton key={index} name={name} isPressed={name === filter} />
         ))}

@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const FormStyled = styled.form`
   display: flex;
   flex-grow: 1;
+  align-items: baseline;
 
   .form-input {
     padding: 0 15px;
@@ -20,5 +21,9 @@ export const FormStyled = styled.form`
   .form-button_add {
     height: 40px;
     margin-left: 7px;
+  }
+
+  .form-renders {
+    margin-left: 5px;
   }
 `;

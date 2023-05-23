@@ -3,20 +3,26 @@ import { Task } from "./Task";
 
 import { useAppSelector } from "../../store/hooks";
 import { TasksStyled } from "./Tasks.styled";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export const Tasks: React.FC = () => {
-
   const todos = useAppSelector((state) => state.todos.todos);
 
   return (
     <TasksStyled>
-      {todos?.length ? (
-        todos?.map((todo, idx) => (
-          <Task key={`${todo._id} ${idx}`} todo={todo} />
-        ))
-      ) : (
-        <h3> Tasks not found</h3>
-      )}
+      <TransitionGroup>
+        {
+          // todos?.length ? (
+          todos?.map((todo, idx) => (
+            <CSSTransition key={idx} timeout={500} classNames={"tasks"}>
+              <Task key={`${todo.id} ${idx}`} todo={todo} />
+            </CSSTransition>
+          ))
+          // ) : (
+          //   <h3> Tasks not found</h3>
+          // )
+        }
+      </TransitionGroup>
     </TasksStyled>
   );
 };
