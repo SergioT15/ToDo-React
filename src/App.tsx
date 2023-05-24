@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import {
   Transition,
-  // TransitionGroup,
-  // SwitchTransition,
-  // CSSTransition,
+  SwitchTransition,
+  CSSTransition,
 } from "react-transition-group";
 
 import { Form } from "./components/Form";
@@ -19,6 +18,9 @@ import { useDispatch } from "react-redux";
 import { setPages, setTodo, setAciveTodos } from "./store/todoSlice";
 import { useAppSelector } from "./store/hooks";
 
+import useRouter from './router/router';
+import { RouterProvider } from 'react-router-dom';
+
 const App = () => {
   const dispatch = useDispatch();
   const currentPage = useAppSelector((state) => state.todos.currentPage);
@@ -27,6 +29,9 @@ const App = () => {
   const todosLength = todos.length;
   const countActiveTodo = useAppSelector((state) => state.todos.AciveTodos);
   const [loaderVisible, setLoaderVisible] = useState(true);
+  
+  const [toggle, setToggle]= useState(false)
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -42,22 +47,19 @@ const App = () => {
     })();
   }, [currentPage, filter, todosLength, countActiveTodo]);
 
-  // const [toggle, setToggle] = useState(false);
-
-  // const [seconds, setSeconds] = useState(0);
-
-  // const timerId = useRef("");
-
-  // const startTimer = () => {
-  //   timerId.current = setInterval(() => {
-  //     setSeconds((prev) => prev + 1);
-  //   }, 1000);
-  // };
+  // Timer
+  const [seconds, setSeconds] = useState<number>(0);
+  const timerId = useRef<NodeJS.Timeout>();
+  const startTimer = () => {
+    timerId.current = setInterval(() => {
+      setSeconds((prev) => prev + 1);
+    }, 1000);
+  };
 
   return (
     <AppStyled>
       <div className="conteiner">
-        {/* <div>
+        <div>
           <SwitchTransition >
             <CSSTransition key={toggle} timeout={500} classNames="fade">
               <button onClick={() => setToggle(!toggle)}>
@@ -65,7 +67,7 @@ const App = () => {
               </button>
             </CSSTransition>
           </SwitchTransition>
-        </div> */}
+        </div>
         <Title />
         <Form />
         {todosLength ? (
@@ -74,8 +76,8 @@ const App = () => {
           <h3 className={"task-not-found"}> Tasks not found</h3>
         )}
         <Pages />
-        {/* <button onClick={startTimer}>Start</button>
-      <p>{seconds}</p> */}
+        <button onClick={startTimer}>Start</button>
+      <p>{seconds}</p>
         <Filter />
         <div className="wrap">
           <Transition
@@ -88,6 +90,7 @@ const App = () => {
           </Transition>
         </div>
       </div>
+      <RouterProvider router={router} />
     </AppStyled>
   );
 };

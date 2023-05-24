@@ -71,7 +71,7 @@ export const AppStyled = styled.div`
     margin-bottom: 10px;
   }
 
-  /* .fade-enter-active {
+  .fade-enter-active {
     animation: fade-in 500ms forwards;
   }
 
@@ -99,7 +99,7 @@ export const AppStyled = styled.div`
       opacity: 0;
       transform: translateX(150px);
     }
-  } */
+  }
 
   button {
     border-radius: 13px;
