@@ -7,7 +7,7 @@ import { FormStyled } from "./Form.styled";
 import { useAppDispatch } from "../../store/hooks";
 import { todoSlice } from "../../store/todoSlice";
 
-export const Form: React.FC = (props) => {
+export const Form: React.FC = () => {
   const [text, setText] = useState("");
   const dispatch = useAppDispatch();
 

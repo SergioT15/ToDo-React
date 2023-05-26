@@ -1,24 +1,27 @@
 // import { BrowserRouter, Routes, Route, createBrowserRouter } from 'react-router-dom';
 
-import { createBrowserRouter } from "react-router-dom";
-import { App } from "../App";
-import { Help } from "../help/Help";
-import { AboutUs } from "../about us/AboutUs";
+// import { createBrowserRouter } from "react-router-dom";
+// import { Help } from "../page/Help";
+// import { AboutUs } from "../page/AboutUs";
 
-const useRouter = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <AboutUs />,
-      children: [
-        {
-          path: "/Help",
-          element: <Help />,
-        },
-      ],
-    },
-  ]);
+// const useRouter = () => {
+//   const router = createBrowserRouter([
+//     {
+//       path: "/",
+//       element: <AboutUs />,
+//       children: [
+//         {
+//           path: "/help",
+//           element: <Help />,
+//         },
+//         {
+//           path: "/aboutus",
+//           element: <AboutUs />,
+//         },
+//       ],
+//     },
+//   ]);
 
-  return router;
-};
-export default useRouter;
+//   return router;
+// };
+// export default useRouter;

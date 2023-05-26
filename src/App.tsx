@@ -11,6 +11,10 @@ import { Title } from "./components/Title";
 import { Tasks } from "./components/Tasks";
 import { Filter } from "./components/Filter";
 import { Pages } from "./components/Pages";
+import { DefaultLayout } from "./page/DefaultLayout";
+import { AboutUs } from "./page/AboutUs";
+import { Help } from "./page/Help";
+import { IndexPage } from "./page/IndexPage";
 
 import { AppStyled } from "./App.styled";
 import { getToDos } from "./api/todoApi";
@@ -18,8 +22,8 @@ import { useDispatch } from "react-redux";
 import { setPages, setTodo, setAciveTodos } from "./store/todoSlice";
 import { useAppSelector } from "./store/hooks";
 
-import useRouter from './router/router';
-import { RouterProvider } from 'react-router-dom';
+// import useRouter from "./router/router";
+import { RouterProvider, Routes, Route } from "react-router-dom";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,9 +33,9 @@ const App = () => {
   const todosLength = todos.length;
   const countActiveTodo = useAppSelector((state) => state.todos.AciveTodos);
   const [loaderVisible, setLoaderVisible] = useState(true);
-  
-  const [toggle, setToggle]= useState(false)
-  const router = useRouter();
+
+  const [toggle, setToggle] = useState(false);
+  // const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -60,7 +64,7 @@ const App = () => {
     <AppStyled>
       <div className="conteiner">
         <div>
-          <SwitchTransition >
+          <SwitchTransition>
             <CSSTransition key={toggle} timeout={500} classNames="fade">
               <button onClick={() => setToggle(!toggle)}>
                 {toggle ? "hello" : "goodbye"}
@@ -77,7 +81,7 @@ const App = () => {
         )}
         <Pages />
         <button onClick={startTimer}>Start</button>
-      <p>{seconds}</p>
+        <p>{seconds}</p>
         <Filter />
         <div className="wrap">
           <Transition
@@ -90,7 +94,17 @@ const App = () => {
           </Transition>
         </div>
       </div>
-      <RouterProvider router={router} />
+      <div>
+        <Routes>
+          <Route path={"/"} element={<DefaultLayout />}>
+            <Route index element={<IndexPage/>}></Route>
+            <Route path={"aboutus"} element={<AboutUs />}></Route>
+            <Route path={"help"} element={<Help />}></Route>
+          </Route>
+        </Routes>
+      </div>
+
+      {/* <RouterProvider router={router} /> */}
     </AppStyled>
   );
 };
