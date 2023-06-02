@@ -1,9 +1,9 @@
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 
 const IndexPage: React.FC = () => {
   return (
     <>
-      <Outlet></Outlet>
+      <p>From Sergio</p>
     </>
   );
 };

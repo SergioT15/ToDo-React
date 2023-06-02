@@ -11,10 +11,10 @@ import { Title } from "./components/Title";
 import { Tasks } from "./components/Tasks";
 import { Filter } from "./components/Filter";
 import { Pages } from "./components/Pages";
-import { DefaultLayout } from "./page/DefaultLayout";
 import { AboutUs } from "./page/AboutUs";
 import { Help } from "./page/Help";
-import { IndexPage } from "./page/IndexPage";
+// import { IndexPage } from "./page/IndexPage";
+import { Layout } from "./Layout/Layout";
 
 import { AppStyled } from "./App.styled";
 import { getToDos } from "./api/todoApi";
@@ -23,7 +23,7 @@ import { setPages, setTodo, setAciveTodos } from "./store/todoSlice";
 import { useAppSelector } from "./store/hooks";
 
 // import useRouter from "./router/router";
-import { RouterProvider, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -96,15 +96,14 @@ const App = () => {
       </div>
       <div>
         <Routes>
-          <Route path={"/"} element={<DefaultLayout />}>
-            <Route index element={<IndexPage/>}></Route>
-            <Route path={"aboutus"} element={<AboutUs />}></Route>
-            <Route path={"help"} element={<Help />}></Route>
+          <Route path="/" element={<Layout />}>
+            {/* <Route index element={<IndexPage />}></Route> */}
+            <Route path="/aboutus" element={<AboutUs />}></Route>
+            <Route path="/help" element={<Help />}></Route>
           </Route>
         </Routes>
       </div>
 
-      {/* <RouterProvider router={router} /> */}
     </AppStyled>
   );
 };
